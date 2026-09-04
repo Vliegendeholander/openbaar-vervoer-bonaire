@@ -1,0 +1,4750 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encuesta de Movilidad y Transporte Publico - Bonaire 2026</title>
+<meta name="robots" content="noindex">
+
+<script>
+/* ==========================================================================
+   CONFIGURACION  ·  Encuesta de Movilidad y Transporte Publico, Bonaire 2026
+   URL de su Google Apps Script. Tiene que terminar en /exec.
+   ========================================================================== */
+
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbxW2c_mxLF-hHDgUaiqzu45BpVQSpE83j4FuL5IY1yVeVhZQWiQm2kj_tko8bWUWi3jiA/exec";
+
+/* ========================================================================== */
+</script>
+
+<style>
+:root{--ink:#14202b;--mut:#5a6b7a;--line:#dfe6ec;--acc:#1F4E79;--bg:#f6f8fa;--card:#fff;--err:#a61c00}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.hwrap{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;gap:10px;align-items:center;
+ justify-content:space-between;flex-wrap:wrap}
+.brand{font-weight:700;color:var(--acc);font-size:15px}
+#langbar{display:flex;gap:6px;flex-wrap:wrap}
+.lang{border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:999px;
+ padding:5px 12px;font-size:13px;cursor:pointer}
+.lang.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+#track{height:4px;background:var(--line)}
+#bar{height:4px;width:0;background:var(--acc);transition:width .3s}
+main{max-width:720px;margin:0 auto;padding:26px 18px 90px}
+h1{font-size:26px;line-height:1.25;color:var(--acc);margin:0 0 16px}
+h2{font-size:21px;line-height:1.3;color:var(--acc);margin:4px 0 22px;
+ padding-bottom:10px;border-bottom:2px solid var(--line)}
+.step{color:var(--mut);font-size:13px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+p.intro{margin:0 0 14px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:0 0 16px}
+.qt{margin:0 0 4px;font-weight:600;font-size:17px;line-height:1.4}
+.num{display:inline-block;min-width:26px;color:var(--acc)}
+.hint{margin:2px 0 10px;color:var(--mut);font-size:14px;font-style:italic}
+.err{display:none;margin:6px 0 8px;color:var(--err);font-size:14px;font-weight:600}
+.opts{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:9px 11px;border-radius:8px;cursor:pointer;
+ border:1px solid transparent}
+.opt:hover{background:#f2f6fa}
+.opt.sel{background:#eaf1f8;border-color:#bcd3e8}
+.opt input{margin:3px 0 0;flex:0 0 auto;width:18px;height:18px;accent-color:var(--acc)}
+.opt span{flex:1}
+.mrow{margin-top:14px}
+.mlab{margin:0;font-weight:600;font-size:15px}
+input.num-in{width:120px;font-size:17px;padding:9px 11px;border:1px solid var(--line);border-radius:8px}
+input.txt,textarea.txt{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);
+ border-radius:8px;font-family:inherit}
+.unit{color:var(--mut);font-size:14px;margin-left:8px}
+.flab{display:block;font-size:14px;color:var(--mut);margin-bottom:4px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav button{font:inherit;font-size:16px;padding:13px 26px;border-radius:8px;cursor:pointer;
+ border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.nav button.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.nav button:disabled{opacity:.6;cursor:default}
+@media(max-width:560px){main{padding:18px 12px 80px}.q{padding:14px}h1{font-size:22px}
+ .nav button{flex:1;padding:14px 12px}}
+#warn{background:#fdecea;border-bottom:2px solid var(--err);color:#7a1500;
+ padding:11px 18px;font-size:14px;line-height:1.45}
+#pend{background:#fff6e0;border-bottom:1px solid #e8c977;color:#6b4b00;
+ padding:9px 18px;font-size:13px}
+a.btn{display:inline-block;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;
+ padding:13px 26px;border-radius:8px;font-size:16px}
+a.btn:hover{filter:brightness(1.1)}
+.sep-note{margin-top:18px;color:var(--mut);font-size:13px;line-height:1.5}
+button.nav-btn{font:inherit;font-size:16px;padding:13px 26px;border-radius:8px;cursor:pointer;
+ border:1px solid var(--acc);background:var(--acc);color:#fff;font-weight:600}
+button.nav-btn:disabled{opacity:.6;cursor:default}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <span class="brand">Openbaar Lichaam Bonaire</span>
+    <div id="langbar"></div>
+  </div>
+  <div id="track"><div id="bar"></div></div>
+</header>
+<main id="main"></main>
+<script>
+const SURVEY = {
+ "langs": [
+  "ES",
+  "NL",
+  "EN",
+  "PAP"
+ ],
+ "intro": [
+  {
+   "ES": "Encuesta sobre movilidad y transporte público en Bonaire",
+   "NL": "Enquête over mobiliteit en openbaar vervoer op Bonaire",
+   "EN": "Survey on mobility and public transport in Bonaire",
+   "PAP": "Enkuesta tokante mobilidat i transporte públiko na Boneiru"
+  },
+  {
+   "ES": "Estimado/a residente,",
+   "NL": "Geachte inwoner,",
+   "EN": "Dear resident,",
+   "PAP": "Estimá residente,"
+  },
+  {
+   "ES": "El Openbaar Lichaam Bonaire está preparando la puesta en marcha de un servicio de transporte público en la isla. Para diseñar rutas, paradas, horarios y tarifas que realmente sirvan a quienes viven aquí, necesitamos saber cómo se desplaza usted hoy y qué necesitaría para usar el servicio.",
+   "NL": "Het Openbaar Lichaam Bonaire bereidt de invoering van openbaar vervoer op het eiland voor. Om routes, haltes, dienstregelingen en tarieven te ontwerpen die echt van nut zijn voor de mensen die hier wonen, moeten we weten hoe u zich vandaag verplaatst en wat u nodig zou hebben om van de dienst gebruik te maken.",
+   "EN": "The Openbaar Lichaam Bonaire is preparing to launch a public transport service on the island. To design routes, stops, timetables and fares that genuinely serve the people who live here, we need to know how you travel today and what you would need in order to use the service.",
+   "PAP": "Openbaar Lichaam Bonaire ta prepará pa introdusí un servisio di transporte públiko riba e isla. Pa diseñá ruta, parada, orario i tarifa ku di bèrdat ta sirbi e hendenan ku ta biba akinan, nos mester sa kon bo ta move awendia i kiko lo bo tin mester pa usa e servisio."
+  },
+  {
+   "ES": "Esta encuesta dura entre 10 y 14 minutos, según sus respuestas. No hay respuestas correctas ni incorrectas.",
+   "NL": "Deze enquête duurt tussen de 10 en 14 minuten, afhankelijk van uw antwoorden. Er zijn geen goede of foute antwoorden.",
+   "EN": "This survey takes between 10 and 14 minutes, depending on your answers. There are no right or wrong answers.",
+   "PAP": "E enkuesta aki ta dura entre 10 i 14 minüt, dependiendo di bo kontestanan. No tin kontesta korekto ni inkorekto."
+  },
+  {
+   "ES": "Sus respuestas se guardan de forma anónima y separada de cualquier dato que permita identificarle. Al final, y solo si usted lo desea, podrá dejar sus datos de contacto en un formulario aparte.",
+   "NL": "Uw antwoorden worden anoniem bewaard en gescheiden van alle gegevens waarmee u geïdentificeerd zou kunnen worden. Aan het einde kunt u, en alleen als u dat zelf wilt, uw contactgegevens achterlaten in een apart formulier.",
+   "EN": "Your answers are stored anonymously and separately from any data that could identify you. At the end, and only if you wish, you may leave your contact details in a separate form.",
+   "PAP": "Bo kontestanan ta wòrdu warda anónimamente i separá for di kualke dato ku por identifiká bo. Na final, i solamente si bo ke, bo por laga bo datonan di kontakto den un formulario aparte."
+  },
+  {
+   "ES": "Información sobre el tratamiento de sus datos:",
+   "NL": "Informatie over de verwerking van uw gegevens:",
+   "EN": "Information on the processing of your data:",
+   "PAP": "Informashon tokante e tratamentu di bo datonan:"
+  },
+  {
+   "ES": "• Responsable del tratamiento: [POR CONFIRMAR — OLB].\n• Finalidad: diseñar el servicio de transporte público de Bonaire.\n• Base legal: consentimiento del titular.\n• Conservación: los datos de investigación se conservan [X] años; los datos de contacto se eliminan al finalizar el proyecto.\n• Derechos: puede solicitar acceso, rectificación o eliminación de sus datos escribiendo a [CORREO].\n• Marco legal: Wet bescherming persoonsgegevens BES.",
+   "NL": "• Verwerkingsverantwoordelijke: [NOG TE BEVESTIGEN — OLB].\n• Doel: het ontwerpen van het openbaar vervoer van Bonaire.\n• Rechtsgrond: toestemming van de betrokkene.\n• Bewaartermijn: onderzoeksgegevens worden [X] jaar bewaard; contactgegevens worden aan het einde van het project verwijderd.\n• Rechten: u kunt inzage, correctie of verwijdering van uw gegevens aanvragen via [E-MAIL].\n• Wet bescherming persoonsgegevens BES.",
+   "EN": "• Data controller: [TO BE CONFIRMED — OLB].\n• Purpose: designing Bonaire's public transport service.\n• Legal basis: consent of the data subject.\n• Retention: research data are kept for [X] years; contact details are deleted at the end of the project.\n• Rights: you may request access to, correction of or deletion of your data by writing to [EMAIL].\n• Wet bescherming persoonsgegevens BES.",
+   "PAP": "• Responsabel di e tratamentu: [PA KONFIRMÁ — OLB].\n• Finalidat: diseñá e servisio di transporte públiko di Boneiru.\n• Base legal: konsentimentu di e persona.\n• Konservashon: e datonan di investigashon ta wòrdu warda [X] aña; e datonan di kontakto ta wòrdu kitá ora e proyekto kaba.\n• Derechonan: bo por pidi akseso, korekshon òf eliminashon di bo datonan via [E-MAIL].\n• Wet bescherming persoonsgegevens BES."
+  }
+ ],
+ "blocks": [
+  {
+   "title": {
+    "ES": "Bloque 0 — Introducción y consentimiento",
+    "NL": "Blok 0 — Inleiding en toestemming",
+    "EN": "Block 0 — Introduction and consent",
+    "PAP": "Blòk 0 — Introdukshon i konsentimentu"
+   },
+   "questions": [
+    {
+     "id": "Consent",
+     "type": "radio",
+     "text": {
+      "ES": "¿Ha leído la información anterior y acepta participar en esta encuesta?",
+      "NL": "Hebt u de bovenstaande informatie gelezen en stemt u ermee in deel te nemen aan deze enquête?",
+      "EN": "Have you read the information above and do you agree to take part in this survey?",
+      "PAP": "Bo a lesa e informashon ariba i bo ta di akuerdo pa partisipá den e enkuesta aki?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí, acepto participar",
+        "NL": "Ja, ik neem deel",
+        "EN": "Yes, I agree to take part",
+        "PAP": "Sí, mi ta partisipá"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ]
+    },
+    {
+     "id": "Residencia",
+     "type": "radio",
+     "text": {
+      "ES": "¿Vive usted en Bonaire desde hace más de 6 meses?",
+      "NL": "Woont u langer dan 6 maanden op Bonaire?",
+      "EN": "Have you been living in Bonaire for more than 6 months?",
+      "PAP": "Bo ta biba na Boneiru mas ku 6 luna?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ],
+     "required": true,
+     "screenout": "No"
+    },
+    {
+     "id": "Edad",
+     "type": "number",
+     "text": {
+      "ES": "¿Qué edad tiene usted?",
+      "NL": "Hoe oud bent u?",
+      "EN": "How old are you?",
+      "PAP": "Kuantu aña bo tin?"
+     },
+     "min": 16,
+     "max": 110,
+     "required": true
+    }
+   ]
+  },
+  {
+   "title": {
+    "ES": "Bloque A — Hogar, vehículos y perfil lingüístico",
+    "NL": "Blok A — Huishouden, voertuigen en talenprofiel",
+    "EN": "Block A — Household, vehicles and language profile",
+    "PAP": "Blòk A — Kas, vehíkulonan i perfil di idioma"
+   },
+   "questions": [
+    {
+     "id": "A1_Barrio",
+     "type": "radio",
+     "text": {
+      "ES": "¿En qué barrio o zona vive usted?",
+      "NL": "In welke wijk of welk gebied woont u?",
+      "EN": "Which neighbourhood or area do you live in?",
+      "PAP": "Den ki bario òf zona bo ta biba?"
+     },
+     "options": [
+      {
+       "code": "BRR01",
+       "label": {
+        "ES": "Amboina",
+        "NL": "Amboina",
+        "EN": "Amboina",
+        "PAP": "Amboina"
+       }
+      },
+      {
+       "code": "BRR02",
+       "label": {
+        "ES": "Antriol Pariba",
+        "NL": "Antriol Pariba",
+        "EN": "Antriol Pariba",
+        "PAP": "Antriol Pariba"
+       }
+      },
+      {
+       "code": "BRR03",
+       "label": {
+        "ES": "Antriol Pabou",
+        "NL": "Antriol Pabou",
+        "EN": "Antriol Pabou",
+        "PAP": "Antriol Pabou"
+       }
+      },
+      {
+       "code": "BRR04",
+       "label": {
+        "ES": "Belnem",
+        "NL": "Belnem",
+        "EN": "Belnem",
+        "PAP": "Belnem"
+       }
+      },
+      {
+       "code": "BRR05",
+       "label": {
+        "ES": "Hato",
+        "NL": "Hato",
+        "EN": "Hato",
+        "PAP": "Hato"
+       }
+      },
+      {
+       "code": "BRR06",
+       "label": {
+        "ES": "Lagun Hill",
+        "NL": "Lagun Hill",
+        "EN": "Lagun Hill",
+        "PAP": "Lagun Hill"
+       }
+      },
+      {
+       "code": "BRR07",
+       "label": {
+        "ES": "Lima",
+        "NL": "Lima",
+        "EN": "Lima",
+        "PAP": "Lima"
+       }
+      },
+      {
+       "code": "BRR08",
+       "label": {
+        "ES": "Mexico",
+        "NL": "Mexico",
+        "EN": "Mexico",
+        "PAP": "Mexico"
+       }
+      },
+      {
+       "code": "BRR09",
+       "label": {
+        "ES": "Nawati Noord",
+        "NL": "Nawati Noord",
+        "EN": "Nawati Noord",
+        "PAP": "Nawati Noord"
+       }
+      },
+      {
+       "code": "BRR10",
+       "label": {
+        "ES": "Nawati Zuid",
+        "NL": "Nawati Zuid",
+        "EN": "Nawati Zuid",
+        "PAP": "Nawati Zuid"
+       }
+      },
+      {
+       "code": "BRR11",
+       "label": {
+        "ES": "Nikiboko",
+        "NL": "Nikiboko",
+        "EN": "Nikiboko",
+        "PAP": "Nikiboko"
+       }
+      },
+      {
+       "code": "BRR12",
+       "label": {
+        "ES": "Noord Saliña",
+        "NL": "Noord Saliña",
+        "EN": "Noord Saliña",
+        "PAP": "Noord Saliña"
+       }
+      },
+      {
+       "code": "BRR13",
+       "label": {
+        "ES": "Playa (Centro)",
+        "NL": "Playa (centrum)",
+        "EN": "Playa (town centre)",
+        "PAP": "Playa (Sentro)"
+       }
+      },
+      {
+       "code": "BRR14",
+       "label": {
+        "ES": "Playa Pariba",
+        "NL": "Playa Pariba",
+        "EN": "Playa Pariba",
+        "PAP": "Playa Pariba"
+       }
+      },
+      {
+       "code": "BRR15",
+       "label": {
+        "ES": "Playa Pabou",
+        "NL": "Playa Pabou",
+        "EN": "Playa Pabou",
+        "PAP": "Playa Pabou"
+       }
+      },
+      {
+       "code": "BRR16",
+       "label": {
+        "ES": "Republiek",
+        "NL": "Republiek",
+        "EN": "Republiek",
+        "PAP": "Republiek"
+       }
+      },
+      {
+       "code": "BRR17",
+       "label": {
+        "ES": "Rincon Noord",
+        "NL": "Rincon Noord",
+        "EN": "Rincon Noord",
+        "PAP": "Rincon Noord"
+       }
+      },
+      {
+       "code": "BRR18",
+       "label": {
+        "ES": "Rincon Zuid",
+        "NL": "Rincon Zuid",
+        "EN": "Rincon Zuid",
+        "PAP": "Rincon Zuid"
+       }
+      },
+      {
+       "code": "BRR19",
+       "label": {
+        "ES": "Sabadeco",
+        "NL": "Sabadeco",
+        "EN": "Sabadeco",
+        "PAP": "Sabadeco"
+       }
+      },
+      {
+       "code": "BRR20",
+       "label": {
+        "ES": "Sabana",
+        "NL": "Sabana",
+        "EN": "Sabana",
+        "PAP": "Sabana"
+       }
+      },
+      {
+       "code": "BRR21",
+       "label": {
+        "ES": "Santa Barbara",
+        "NL": "Santa Barbara",
+        "EN": "Santa Barbara",
+        "PAP": "Santa Barbara"
+       }
+      },
+      {
+       "code": "BRR22",
+       "label": {
+        "ES": "Tera Kora",
+        "NL": "Tera Kora",
+        "EN": "Tera Kora",
+        "PAP": "Tera Kora"
+       }
+      },
+      {
+       "code": "BRR99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "required": true
+    },
+    {
+     "id": "A2_Personas",
+     "type": "number",
+     "text": {
+      "ES": "Incluyéndose usted, ¿de cuántas personas se compone su hogar?",
+      "NL": "Uzelf meegerekend, uit hoeveel personen bestaat uw huishouden?",
+      "EN": "Including yourself, how many people make up your household?",
+      "PAP": "Kontando bo mes, for di kuantu persona bo kas ta konsistí?"
+     },
+     "hint": {
+      "ES": "No cuente a hijos que no estén registrados en su dirección.",
+      "NL": "Tel kinderen die niet op uw adres staan ingeschreven niet mee.",
+      "EN": "Do not count children who are not registered at your address.",
+      "PAP": "No konta yunan ku no ta registrá na bo adrès."
+     },
+     "min": 1,
+     "max": 20,
+     "required": true
+    },
+    {
+     "id": "A3_MenoresEscolarizados",
+     "type": "number",
+     "text": {
+      "ES": "¿Cuántas personas de su hogar tienen menos de 18 años y van a la escuela?",
+      "NL": "Hoeveel personen in uw huishouden zijn jonger dan 18 jaar én gaan naar school?",
+      "EN": "How many people in your household are under 18 and attend school?",
+      "PAP": "Kuantu persona den bo kas tin ménos ku 18 aña i ta bai skol?"
+     },
+     "min": 0,
+     "max": 20,
+     "required": true,
+     "lte": "A2_Personas"
+    },
+    {
+     "id": "A4_Autos",
+     "type": "number",
+     "text": {
+      "ES": "¿Cuántos automóviles hay en su hogar?",
+      "NL": "Hoeveel auto's zijn er in uw huishouden?",
+      "EN": "How many cars are there in your household?",
+      "PAP": "Kuantu outo tin den bo kas?"
+     },
+     "hint": {
+      "ES": "Cuente también un auto de leasing o de la empresa si se usa para fines privados.",
+      "NL": "Tel ook een lease- of bedrijfsauto mee als die voor privédoeleinden wordt gebruikt.",
+      "EN": "Also count a leased or company car if it is used for private purposes.",
+      "PAP": "Konta tambe un outo di leasing òf di kompania si e ta wòrdu usá pa fin privá."
+     },
+     "min": 0,
+     "max": 20,
+     "required": true
+    },
+    {
+     "id": "A5_AutoAlquiler",
+     "type": "radio",
+     "text": {
+      "ES": "¿Alguno de esos automóviles es un vehículo alquilado (rental)?",
+      "NL": "Is een van die auto's een huurauto (rental)?",
+      "EN": "Is any of those cars a rental vehicle?",
+      "PAP": "Un di e outonan ei ta un outo di hür (rental)?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ],
+     "cond": {
+      "q": "A4_Autos",
+      "op": ">",
+      "v": 0
+     }
+    },
+    {
+     "id": "A6_Motor",
+     "type": "radio",
+     "text": {
+      "ES": "¿Usted o alguien de su hogar posee una motocicleta, scooter, ciclomotor u otro vehículo motorizado?",
+      "NL": "Bezit u of iemand in uw huishouden een motor, scooter, bromfiets of ander gemotoriseerd voertuig?",
+      "EN": "Do you or anyone in your household own a motorcycle, scooter, moped or other motorised vehicle?",
+      "PAP": "Bo òf un hende den bo kas tin un motosaikel, skuter, bròmer òf otro vehíkulo motorisá?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ]
+    },
+    {
+     "id": "A7_Bicicleta",
+     "type": "radio",
+     "text": {
+      "ES": "¿Usted o alguien de su hogar posee una bicicleta o fatbike en condiciones de uso?",
+      "NL": "Bezit u of iemand in uw huishouden een bruikbare fiets of fatbike?",
+      "EN": "Do you or anyone in your household own a bicycle or fatbike in working condition?",
+      "PAP": "Bo òf un hende den bo kas tin un baiskel òf fatbike den bon kondishon?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ]
+    },
+    {
+     "id": "A8_Licencia",
+     "type": "radio",
+     "text": {
+      "ES": "¿Tiene usted licencia de conducir vigente?",
+      "NL": "Hebt u een geldig rijbewijs?",
+      "EN": "Do you hold a valid driving licence?",
+      "PAP": "Bo tin un rèilbeweis válido?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ]
+    },
+    {
+     "id": "A9_Idiomas",
+     "type": "check",
+     "text": {
+      "ES": "¿Qué idioma o idiomas habla usted?",
+      "NL": "Welke taal of talen spreekt u?",
+      "EN": "Which language or languages do you speak?",
+      "PAP": "Ki idioma òf idiomanan bo ta papia?"
+     },
+     "hint": {
+      "ES": "Puede elegir varias respuestas.",
+      "NL": "U kunt meerdere antwoorden kiezen.",
+      "EN": "You may choose more than one answer.",
+      "PAP": "Bo por skohe mas ku un kontesta."
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "Pap",
+       "label": {
+        "ES": "Papiamentu",
+        "NL": "Papiamentu",
+        "EN": "Papiamentu",
+        "PAP": "Papiamentu"
+       }
+      },
+      {
+       "code": "Esp",
+       "label": {
+        "ES": "Español",
+        "NL": "Spaans",
+        "EN": "Spanish",
+        "PAP": "Spañó"
+       }
+      },
+      {
+       "code": "Eng",
+       "label": {
+        "ES": "Inglés",
+        "NL": "Engels",
+        "EN": "English",
+        "PAP": "Ingles"
+       }
+      },
+      {
+       "code": "Ned",
+       "label": {
+        "ES": "Neerlandés",
+        "NL": "Nederlands",
+        "EN": "Dutch",
+        "PAP": "Hulandes"
+       }
+      }
+     ]
+    },
+    {
+     "id": "A10_IdiomaMas",
+     "type": "radio",
+     "text": {
+      "ES": "¿Qué idioma habla usted más?",
+      "NL": "Welke taal spreekt u het meest?",
+      "EN": "Which language do you speak most?",
+      "PAP": "Ki idioma bo ta papia mas?"
+     },
+     "filterFrom": "A9_Idiomas",
+     "options": []
+    }
+   ]
+  },
+  {
+   "title": {
+    "ES": "Bloque B — Viaje principal recurrente",
+    "NL": "Blok B — Belangrijkste terugkerende verplaatsing",
+    "EN": "Block B — Main recurrent trip",
+    "PAP": "Blòk B — Biahe prinsipal rekurente"
+   },
+   "questions": [
+    {
+     "id": "B1_ViajaFuera",
+     "type": "radio",
+     "text": {
+      "ES": "¿Se desplaza usted habitualmente fuera de su barrio, al menos una vez por semana?",
+      "NL": "Verplaatst u zich gewoonlijk buiten uw wijk, minstens één keer per week?",
+      "EN": "Do you usually travel outside your neighbourhood, at least once a week?",
+      "PAP": "Bo ta move regularmente pafó di bo bario, por lo ménos un bes pa siman?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ],
+     "required": true
+    },
+    {
+     "id": "B2_Motivo",
+     "type": "radio",
+     "text": {
+      "ES": "Piense en el desplazamiento que usted hace con MÁS frecuencia fuera de su barrio. ¿Cuál es el motivo principal de ese desplazamiento?",
+      "NL": "Denk aan de verplaatsing die u het VAAKST buiten uw wijk maakt. Wat is het belangrijkste doel van die verplaatsing?",
+      "EN": "Think of the trip you make MOST often outside your neighbourhood. What is the main purpose of that trip?",
+      "PAP": "Pensa riba e biahe ku bo ta hasi MAS frekuente pafó di bo bario. Kiko ta e motibu prinsipal di e biahe ei?"
+     },
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "Trabajo",
+       "label": {
+        "ES": "Ir al trabajo",
+        "NL": "Naar het werk",
+        "EN": "Going to work",
+        "PAP": "Bai trabou"
+       }
+      },
+      {
+       "code": "Estudio",
+       "label": {
+        "ES": "Ir a estudiar (escuela, FORMA, MBO)",
+        "NL": "Naar de opleiding (school, FORMA, MBO)",
+        "EN": "Going to study (school, FORMA, MBO)",
+        "PAP": "Bai studia (skol, FORMA, MBO)"
+       }
+      },
+      {
+       "code": "Salud",
+       "label": {
+        "ES": "Atención de salud (hospital, médico, farmacia)",
+        "NL": "Zorg (ziekenhuis, huisarts, apotheek)",
+        "EN": "Healthcare (hospital, doctor, pharmacy)",
+        "PAP": "Atenshon di salú (hospital, dòkter, botika)"
+       }
+      },
+      {
+       "code": "Compras",
+       "label": {
+        "ES": "Compras (supermercado, tiendas)",
+        "NL": "Boodschappen (supermarkt, winkels)",
+        "EN": "Shopping (supermarket, shops)",
+        "PAP": "Kumpramentu (supermerkado, tienda)"
+       }
+      },
+      {
+       "code": "Familia",
+       "label": {
+        "ES": "Visitar familia o amistades",
+        "NL": "Familie of vrienden bezoeken",
+        "EN": "Visiting family or friends",
+        "PAP": "Bishitá famia òf amigunan"
+       }
+      },
+      {
+       "code": "Iglesia",
+       "label": {
+        "ES": "Iglesia o actividad religiosa",
+        "NL": "Kerk of religieuze activiteit",
+        "EN": "Church or religious activity",
+        "PAP": "Misa òf aktividat religioso"
+       }
+      },
+      {
+       "code": "Recreacion",
+       "label": {
+        "ES": "Deporte, playa o recreación",
+        "NL": "Sport, strand of recreatie",
+        "EN": "Sport, beach or recreation",
+        "PAP": "Deporte, playa òf rekreashon"
+       }
+      },
+      {
+       "code": "Gobierno",
+       "label": {
+        "ES": "Trámites de gobierno (OLB, Belastingdienst, etc.)",
+        "NL": "Overheidszaken (OLB, Belastingdienst, enz.)",
+        "EN": "Government business (OLB, Belastingdienst, etc.)",
+        "PAP": "Trámite di gobièrnu (OLB, Belastingdienst, etc.)"
+       }
+      },
+      {
+       "code": "Acompanar",
+       "label": {
+        "ES": "Llevar o recoger a otra persona",
+        "NL": "Iemand anders brengen of ophalen",
+        "EN": "Dropping off or picking up another person",
+        "PAP": "Hiba òf buska un otro hende"
+       }
+      },
+      {
+       "code": "Otro",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B3_Origen",
+     "type": "radio",
+     "text": {
+      "ES": "¿Desde qué barrio inicia normalmente ese desplazamiento?",
+      "NL": "Vanuit welke wijk begint u die verplaatsing gewoonlijk?",
+      "EN": "Which neighbourhood do you usually start that trip from?",
+      "PAP": "For di ki bario bo ta kuminsá e biahe ei normalmente?"
+     },
+     "hint": {
+      "ES": "Normalmente será su barrio de residencia, pero puede ser otro.",
+      "NL": "Meestal is dat uw woonwijk, maar het kan een andere zijn.",
+      "EN": "Usually this will be the neighbourhood where you live, but it may be another one.",
+      "PAP": "Normalmente lo ta bo bario di residensia, pero por ta un otro."
+     },
+     "options": [
+      {
+       "code": "BRR01",
+       "label": {
+        "ES": "Amboina",
+        "NL": "Amboina",
+        "EN": "Amboina",
+        "PAP": "Amboina"
+       }
+      },
+      {
+       "code": "BRR02",
+       "label": {
+        "ES": "Antriol Pariba",
+        "NL": "Antriol Pariba",
+        "EN": "Antriol Pariba",
+        "PAP": "Antriol Pariba"
+       }
+      },
+      {
+       "code": "BRR03",
+       "label": {
+        "ES": "Antriol Pabou",
+        "NL": "Antriol Pabou",
+        "EN": "Antriol Pabou",
+        "PAP": "Antriol Pabou"
+       }
+      },
+      {
+       "code": "BRR04",
+       "label": {
+        "ES": "Belnem",
+        "NL": "Belnem",
+        "EN": "Belnem",
+        "PAP": "Belnem"
+       }
+      },
+      {
+       "code": "BRR05",
+       "label": {
+        "ES": "Hato",
+        "NL": "Hato",
+        "EN": "Hato",
+        "PAP": "Hato"
+       }
+      },
+      {
+       "code": "BRR06",
+       "label": {
+        "ES": "Lagun Hill",
+        "NL": "Lagun Hill",
+        "EN": "Lagun Hill",
+        "PAP": "Lagun Hill"
+       }
+      },
+      {
+       "code": "BRR07",
+       "label": {
+        "ES": "Lima",
+        "NL": "Lima",
+        "EN": "Lima",
+        "PAP": "Lima"
+       }
+      },
+      {
+       "code": "BRR08",
+       "label": {
+        "ES": "Mexico",
+        "NL": "Mexico",
+        "EN": "Mexico",
+        "PAP": "Mexico"
+       }
+      },
+      {
+       "code": "BRR09",
+       "label": {
+        "ES": "Nawati Noord",
+        "NL": "Nawati Noord",
+        "EN": "Nawati Noord",
+        "PAP": "Nawati Noord"
+       }
+      },
+      {
+       "code": "BRR10",
+       "label": {
+        "ES": "Nawati Zuid",
+        "NL": "Nawati Zuid",
+        "EN": "Nawati Zuid",
+        "PAP": "Nawati Zuid"
+       }
+      },
+      {
+       "code": "BRR11",
+       "label": {
+        "ES": "Nikiboko",
+        "NL": "Nikiboko",
+        "EN": "Nikiboko",
+        "PAP": "Nikiboko"
+       }
+      },
+      {
+       "code": "BRR12",
+       "label": {
+        "ES": "Noord Saliña",
+        "NL": "Noord Saliña",
+        "EN": "Noord Saliña",
+        "PAP": "Noord Saliña"
+       }
+      },
+      {
+       "code": "BRR13",
+       "label": {
+        "ES": "Playa (Centro)",
+        "NL": "Playa (centrum)",
+        "EN": "Playa (town centre)",
+        "PAP": "Playa (Sentro)"
+       }
+      },
+      {
+       "code": "BRR14",
+       "label": {
+        "ES": "Playa Pariba",
+        "NL": "Playa Pariba",
+        "EN": "Playa Pariba",
+        "PAP": "Playa Pariba"
+       }
+      },
+      {
+       "code": "BRR15",
+       "label": {
+        "ES": "Playa Pabou",
+        "NL": "Playa Pabou",
+        "EN": "Playa Pabou",
+        "PAP": "Playa Pabou"
+       }
+      },
+      {
+       "code": "BRR16",
+       "label": {
+        "ES": "Republiek",
+        "NL": "Republiek",
+        "EN": "Republiek",
+        "PAP": "Republiek"
+       }
+      },
+      {
+       "code": "BRR17",
+       "label": {
+        "ES": "Rincon Noord",
+        "NL": "Rincon Noord",
+        "EN": "Rincon Noord",
+        "PAP": "Rincon Noord"
+       }
+      },
+      {
+       "code": "BRR18",
+       "label": {
+        "ES": "Rincon Zuid",
+        "NL": "Rincon Zuid",
+        "EN": "Rincon Zuid",
+        "PAP": "Rincon Zuid"
+       }
+      },
+      {
+       "code": "BRR19",
+       "label": {
+        "ES": "Sabadeco",
+        "NL": "Sabadeco",
+        "EN": "Sabadeco",
+        "PAP": "Sabadeco"
+       }
+      },
+      {
+       "code": "BRR20",
+       "label": {
+        "ES": "Sabana",
+        "NL": "Sabana",
+        "EN": "Sabana",
+        "PAP": "Sabana"
+       }
+      },
+      {
+       "code": "BRR21",
+       "label": {
+        "ES": "Santa Barbara",
+        "NL": "Santa Barbara",
+        "EN": "Santa Barbara",
+        "PAP": "Santa Barbara"
+       }
+      },
+      {
+       "code": "BRR22",
+       "label": {
+        "ES": "Tera Kora",
+        "NL": "Tera Kora",
+        "EN": "Tera Kora",
+        "PAP": "Tera Kora"
+       }
+      },
+      {
+       "code": "BRR99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "default": "A1_Barrio",
+     "required": true
+    },
+    {
+     "id": "B4_Destino",
+     "type": "radio",
+     "text": {
+      "ES": "¿A qué barrio se dirige en ese desplazamiento?",
+      "NL": "Naar welke wijk gaat u bij die verplaatsing?",
+      "EN": "Which neighbourhood do you travel to on that trip?",
+      "PAP": "Pa ki bario bo ta bai den e biahe ei?"
+     },
+     "options": [
+      {
+       "code": "BRR01",
+       "label": {
+        "ES": "Amboina",
+        "NL": "Amboina",
+        "EN": "Amboina",
+        "PAP": "Amboina"
+       }
+      },
+      {
+       "code": "BRR02",
+       "label": {
+        "ES": "Antriol Pariba",
+        "NL": "Antriol Pariba",
+        "EN": "Antriol Pariba",
+        "PAP": "Antriol Pariba"
+       }
+      },
+      {
+       "code": "BRR03",
+       "label": {
+        "ES": "Antriol Pabou",
+        "NL": "Antriol Pabou",
+        "EN": "Antriol Pabou",
+        "PAP": "Antriol Pabou"
+       }
+      },
+      {
+       "code": "BRR04",
+       "label": {
+        "ES": "Belnem",
+        "NL": "Belnem",
+        "EN": "Belnem",
+        "PAP": "Belnem"
+       }
+      },
+      {
+       "code": "BRR05",
+       "label": {
+        "ES": "Hato",
+        "NL": "Hato",
+        "EN": "Hato",
+        "PAP": "Hato"
+       }
+      },
+      {
+       "code": "BRR06",
+       "label": {
+        "ES": "Lagun Hill",
+        "NL": "Lagun Hill",
+        "EN": "Lagun Hill",
+        "PAP": "Lagun Hill"
+       }
+      },
+      {
+       "code": "BRR07",
+       "label": {
+        "ES": "Lima",
+        "NL": "Lima",
+        "EN": "Lima",
+        "PAP": "Lima"
+       }
+      },
+      {
+       "code": "BRR08",
+       "label": {
+        "ES": "Mexico",
+        "NL": "Mexico",
+        "EN": "Mexico",
+        "PAP": "Mexico"
+       }
+      },
+      {
+       "code": "BRR09",
+       "label": {
+        "ES": "Nawati Noord",
+        "NL": "Nawati Noord",
+        "EN": "Nawati Noord",
+        "PAP": "Nawati Noord"
+       }
+      },
+      {
+       "code": "BRR10",
+       "label": {
+        "ES": "Nawati Zuid",
+        "NL": "Nawati Zuid",
+        "EN": "Nawati Zuid",
+        "PAP": "Nawati Zuid"
+       }
+      },
+      {
+       "code": "BRR11",
+       "label": {
+        "ES": "Nikiboko",
+        "NL": "Nikiboko",
+        "EN": "Nikiboko",
+        "PAP": "Nikiboko"
+       }
+      },
+      {
+       "code": "BRR12",
+       "label": {
+        "ES": "Noord Saliña",
+        "NL": "Noord Saliña",
+        "EN": "Noord Saliña",
+        "PAP": "Noord Saliña"
+       }
+      },
+      {
+       "code": "BRR13",
+       "label": {
+        "ES": "Playa (Centro)",
+        "NL": "Playa (centrum)",
+        "EN": "Playa (town centre)",
+        "PAP": "Playa (Sentro)"
+       }
+      },
+      {
+       "code": "BRR14",
+       "label": {
+        "ES": "Playa Pariba",
+        "NL": "Playa Pariba",
+        "EN": "Playa Pariba",
+        "PAP": "Playa Pariba"
+       }
+      },
+      {
+       "code": "BRR15",
+       "label": {
+        "ES": "Playa Pabou",
+        "NL": "Playa Pabou",
+        "EN": "Playa Pabou",
+        "PAP": "Playa Pabou"
+       }
+      },
+      {
+       "code": "BRR16",
+       "label": {
+        "ES": "Republiek",
+        "NL": "Republiek",
+        "EN": "Republiek",
+        "PAP": "Republiek"
+       }
+      },
+      {
+       "code": "BRR17",
+       "label": {
+        "ES": "Rincon Noord",
+        "NL": "Rincon Noord",
+        "EN": "Rincon Noord",
+        "PAP": "Rincon Noord"
+       }
+      },
+      {
+       "code": "BRR18",
+       "label": {
+        "ES": "Rincon Zuid",
+        "NL": "Rincon Zuid",
+        "EN": "Rincon Zuid",
+        "PAP": "Rincon Zuid"
+       }
+      },
+      {
+       "code": "BRR19",
+       "label": {
+        "ES": "Sabadeco",
+        "NL": "Sabadeco",
+        "EN": "Sabadeco",
+        "PAP": "Sabadeco"
+       }
+      },
+      {
+       "code": "BRR20",
+       "label": {
+        "ES": "Sabana",
+        "NL": "Sabana",
+        "EN": "Sabana",
+        "PAP": "Sabana"
+       }
+      },
+      {
+       "code": "BRR21",
+       "label": {
+        "ES": "Santa Barbara",
+        "NL": "Santa Barbara",
+        "EN": "Santa Barbara",
+        "PAP": "Santa Barbara"
+       }
+      },
+      {
+       "code": "BRR22",
+       "label": {
+        "ES": "Tera Kora",
+        "NL": "Tera Kora",
+        "EN": "Tera Kora",
+        "PAP": "Tera Kora"
+       }
+      },
+      {
+       "code": "BRR99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "neq": "B3_Origen",
+     "required": true
+    },
+    {
+     "id": "B5a_TipoDestino",
+     "type": "radio",
+     "text": {
+      "ES": "¿Qué tipo de lugar es su destino?",
+      "NL": "Wat voor soort plek is uw bestemming?",
+      "EN": "What kind of place is your destination?",
+      "PAP": "Ki tipo di lugá ta bo destino?"
+     },
+     "cond": {
+      "q": "B2_Motivo",
+      "op": "in",
+      "v": [
+       "Trabajo",
+       "Otro"
+      ]
+     },
+     "options": [
+      {
+       "code": "C1",
+       "label": {
+        "ES": "Mi lugar de trabajo",
+        "NL": "Mijn werkplek",
+        "EN": "My workplace",
+        "PAP": "Mi lugá di trabou"
+       }
+      },
+      {
+       "code": "C2",
+       "label": {
+        "ES": "Escuela o centro educativo",
+        "NL": "School of onderwijsinstelling",
+        "EN": "School or educational institution",
+        "PAP": "Skol òf sentro edukativo"
+       }
+      },
+      {
+       "code": "C3",
+       "label": {
+        "ES": "Centro de salud",
+        "NL": "Gezondheidsvoorziening",
+        "EN": "Health facility",
+        "PAP": "Sentro di salú"
+       }
+      },
+      {
+       "code": "C4",
+       "label": {
+        "ES": "Comercio o supermercado",
+        "NL": "Winkel of supermarkt",
+        "EN": "Shop or supermarket",
+        "PAP": "Komersio òf supermerkado"
+       }
+      },
+      {
+       "code": "C5",
+       "label": {
+        "ES": "Hotel, resort o alojamiento turístico",
+        "NL": "Hotel, resort of toeristisch verblijf",
+        "EN": "Hotel, resort or tourist accommodation",
+        "PAP": "Hotèl, resort òf alohamentu turístiko"
+       }
+      },
+      {
+       "code": "C6",
+       "label": {
+        "ES": "Oficina de gobierno",
+        "NL": "Overheidskantoor",
+        "EN": "Government office",
+        "PAP": "Ofisina di gobièrnu"
+       }
+      },
+      {
+       "code": "C99",
+       "label": {
+        "ES": "Otro tipo de lugar",
+        "NL": "Ander soort plek",
+        "EN": "Another kind of place",
+        "PAP": "Otro tipo di lugá"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B5b_DestinoEspecifico",
+     "type": "cascade",
+     "text": {
+      "ES": "¿Cuál exactamente?",
+      "NL": "Welke precies?",
+      "EN": "Which one exactly?",
+      "PAP": "Kua eksaktamente?"
+     }
+    },
+    {
+     "id": "B5c_DestinoNombre",
+     "type": "text",
+     "text": {
+      "ES": "¿Cómo se llama ese lugar? Escriba el nombre del hotel, la empresa, la escuela o el comercio al que se desplaza.",
+      "NL": "Hoe heet die plek? Schrijf de naam van het hotel, het bedrijf, de school of de winkel waar u naartoe gaat.",
+      "EN": "What is that place called? Write the name of the hotel, company, school or shop you travel to.",
+      "PAP": "Kon e lugá ei yama? Skirbi e nòmber di e hotèl, e kompania, e skol òf e komersio ku bo ta bai."
+     },
+     "hint": {
+      "ES": "Por ejemplo: el nombre del hotel donde trabaja, el nombre de la empresa, o un punto de referencia cercano como la kaya en la que se encuentra.",
+      "NL": "Bijvoorbeeld: de naam van het hotel waar u werkt, de naam van het bedrijf, of een herkenbaar punt in de buurt zoals de kaya waaraan het ligt.",
+      "EN": "For example: the name of the hotel where you work, the name of the company, or a nearby landmark such as the kaya it is on.",
+      "PAP": "Por ehèmpel: e nòmber di e hotèl kaminda bo ta traha, e nòmber di e kompania, òf un punto di referensia serka manera e kaya kaminda e ta keda."
+     },
+     "maxlen": 80,
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     }
+    },
+    {
+     "id": "B5d_DestinoBarrio",
+     "type": "radio",
+     "text": {
+      "ES": "¿En qué barrio o zona de Bonaire se encuentra ese lugar?",
+      "NL": "In welke wijk of welk gebied van Bonaire ligt die plek?",
+      "EN": "In which neighbourhood or area of Bonaire is that place located?",
+      "PAP": "Den ki bario òf zona di Boneiru e lugá ei ta keda?"
+     },
+     "options": [
+      {
+       "code": "BRR01",
+       "label": {
+        "ES": "Amboina",
+        "NL": "Amboina",
+        "EN": "Amboina",
+        "PAP": "Amboina"
+       }
+      },
+      {
+       "code": "BRR02",
+       "label": {
+        "ES": "Antriol Pariba",
+        "NL": "Antriol Pariba",
+        "EN": "Antriol Pariba",
+        "PAP": "Antriol Pariba"
+       }
+      },
+      {
+       "code": "BRR03",
+       "label": {
+        "ES": "Antriol Pabou",
+        "NL": "Antriol Pabou",
+        "EN": "Antriol Pabou",
+        "PAP": "Antriol Pabou"
+       }
+      },
+      {
+       "code": "BRR04",
+       "label": {
+        "ES": "Belnem",
+        "NL": "Belnem",
+        "EN": "Belnem",
+        "PAP": "Belnem"
+       }
+      },
+      {
+       "code": "BRR05",
+       "label": {
+        "ES": "Hato",
+        "NL": "Hato",
+        "EN": "Hato",
+        "PAP": "Hato"
+       }
+      },
+      {
+       "code": "BRR06",
+       "label": {
+        "ES": "Lagun Hill",
+        "NL": "Lagun Hill",
+        "EN": "Lagun Hill",
+        "PAP": "Lagun Hill"
+       }
+      },
+      {
+       "code": "BRR07",
+       "label": {
+        "ES": "Lima",
+        "NL": "Lima",
+        "EN": "Lima",
+        "PAP": "Lima"
+       }
+      },
+      {
+       "code": "BRR08",
+       "label": {
+        "ES": "Mexico",
+        "NL": "Mexico",
+        "EN": "Mexico",
+        "PAP": "Mexico"
+       }
+      },
+      {
+       "code": "BRR09",
+       "label": {
+        "ES": "Nawati Noord",
+        "NL": "Nawati Noord",
+        "EN": "Nawati Noord",
+        "PAP": "Nawati Noord"
+       }
+      },
+      {
+       "code": "BRR10",
+       "label": {
+        "ES": "Nawati Zuid",
+        "NL": "Nawati Zuid",
+        "EN": "Nawati Zuid",
+        "PAP": "Nawati Zuid"
+       }
+      },
+      {
+       "code": "BRR11",
+       "label": {
+        "ES": "Nikiboko",
+        "NL": "Nikiboko",
+        "EN": "Nikiboko",
+        "PAP": "Nikiboko"
+       }
+      },
+      {
+       "code": "BRR12",
+       "label": {
+        "ES": "Noord Saliña",
+        "NL": "Noord Saliña",
+        "EN": "Noord Saliña",
+        "PAP": "Noord Saliña"
+       }
+      },
+      {
+       "code": "BRR13",
+       "label": {
+        "ES": "Playa (Centro)",
+        "NL": "Playa (centrum)",
+        "EN": "Playa (town centre)",
+        "PAP": "Playa (Sentro)"
+       }
+      },
+      {
+       "code": "BRR14",
+       "label": {
+        "ES": "Playa Pariba",
+        "NL": "Playa Pariba",
+        "EN": "Playa Pariba",
+        "PAP": "Playa Pariba"
+       }
+      },
+      {
+       "code": "BRR15",
+       "label": {
+        "ES": "Playa Pabou",
+        "NL": "Playa Pabou",
+        "EN": "Playa Pabou",
+        "PAP": "Playa Pabou"
+       }
+      },
+      {
+       "code": "BRR16",
+       "label": {
+        "ES": "Republiek",
+        "NL": "Republiek",
+        "EN": "Republiek",
+        "PAP": "Republiek"
+       }
+      },
+      {
+       "code": "BRR17",
+       "label": {
+        "ES": "Rincon Noord",
+        "NL": "Rincon Noord",
+        "EN": "Rincon Noord",
+        "PAP": "Rincon Noord"
+       }
+      },
+      {
+       "code": "BRR18",
+       "label": {
+        "ES": "Rincon Zuid",
+        "NL": "Rincon Zuid",
+        "EN": "Rincon Zuid",
+        "PAP": "Rincon Zuid"
+       }
+      },
+      {
+       "code": "BRR19",
+       "label": {
+        "ES": "Sabadeco",
+        "NL": "Sabadeco",
+        "EN": "Sabadeco",
+        "PAP": "Sabadeco"
+       }
+      },
+      {
+       "code": "BRR20",
+       "label": {
+        "ES": "Sabana",
+        "NL": "Sabana",
+        "EN": "Sabana",
+        "PAP": "Sabana"
+       }
+      },
+      {
+       "code": "BRR21",
+       "label": {
+        "ES": "Santa Barbara",
+        "NL": "Santa Barbara",
+        "EN": "Santa Barbara",
+        "PAP": "Santa Barbara"
+       }
+      },
+      {
+       "code": "BRR22",
+       "label": {
+        "ES": "Tera Kora",
+        "NL": "Tera Kora",
+        "EN": "Tera Kora",
+        "PAP": "Tera Kora"
+       }
+      },
+      {
+       "code": "BRR99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "default": "B4_Destino",
+     "required": true
+    },
+    {
+     "id": "B6_Frecuencia",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuántos días por semana hace ese desplazamiento?",
+      "NL": "Hoeveel dagen per week maakt u die verplaatsing?",
+      "EN": "How many days a week do you make that trip?",
+      "PAP": "Kuantu dia pa siman bo ta hasi e biahe ei?"
+     },
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "FRQ5",
+       "label": {
+        "ES": "5 o más días por semana",
+        "NL": "5 of meer dagen per week",
+        "EN": "5 or more days a week",
+        "PAP": "5 dia òf mas pa siman"
+       }
+      },
+      {
+       "code": "FRQ3",
+       "label": {
+        "ES": "3 o 4 días por semana",
+        "NL": "3 of 4 dagen per week",
+        "EN": "3 or 4 days a week",
+        "PAP": "3 òf 4 dia pa siman"
+       }
+      },
+      {
+       "code": "FRQ1",
+       "label": {
+        "ES": "1 o 2 días por semana",
+        "NL": "1 of 2 dagen per week",
+        "EN": "1 or 2 days a week",
+        "PAP": "1 òf 2 dia pa siman"
+       }
+      },
+      {
+       "code": "FRQ0",
+       "label": {
+        "ES": "Menos de 1 día por semana",
+        "NL": "Minder dan 1 dag per week",
+        "EN": "Less than 1 day a week",
+        "PAP": "Ménos ku 1 dia pa siman"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B7_HoraIda",
+     "type": "radio",
+     "text": {
+      "ES": "¿A qué hora sale normalmente de su casa para ese desplazamiento?",
+      "NL": "Hoe laat vertrekt u gewoonlijk van huis voor die verplaatsing?",
+      "EN": "What time do you usually leave home for that trip?",
+      "PAP": "Ki ora bo ta sali di kas normalmente pa e biahe ei?"
+     },
+     "options": [
+      {
+       "code": "T1",
+       "label": {
+        "ES": "Antes de las 06:00",
+        "NL": "Vóór 06:00",
+        "EN": "Before 06:00",
+        "PAP": "Promé ku 06:00"
+       }
+      },
+      {
+       "code": "T2",
+       "label": {
+        "ES": "06:00 – 07:00",
+        "NL": "06:00 – 07:00",
+        "EN": "06:00 – 07:00",
+        "PAP": "06:00 – 07:00"
+       }
+      },
+      {
+       "code": "T3",
+       "label": {
+        "ES": "07:00 – 08:00",
+        "NL": "07:00 – 08:00",
+        "EN": "07:00 – 08:00",
+        "PAP": "07:00 – 08:00"
+       }
+      },
+      {
+       "code": "T4",
+       "label": {
+        "ES": "08:00 – 09:00",
+        "NL": "08:00 – 09:00",
+        "EN": "08:00 – 09:00",
+        "PAP": "08:00 – 09:00"
+       }
+      },
+      {
+       "code": "T5",
+       "label": {
+        "ES": "09:00 – 12:00",
+        "NL": "09:00 – 12:00",
+        "EN": "09:00 – 12:00",
+        "PAP": "09:00 – 12:00"
+       }
+      },
+      {
+       "code": "T6",
+       "label": {
+        "ES": "12:00 – 16:00",
+        "NL": "12:00 – 16:00",
+        "EN": "12:00 – 16:00",
+        "PAP": "12:00 – 16:00"
+       }
+      },
+      {
+       "code": "T7",
+       "label": {
+        "ES": "16:00 – 17:00",
+        "NL": "16:00 – 17:00",
+        "EN": "16:00 – 17:00",
+        "PAP": "16:00 – 17:00"
+       }
+      },
+      {
+       "code": "T8",
+       "label": {
+        "ES": "17:00 – 18:00",
+        "NL": "17:00 – 18:00",
+        "EN": "17:00 – 18:00",
+        "PAP": "17:00 – 18:00"
+       }
+      },
+      {
+       "code": "T9",
+       "label": {
+        "ES": "18:00 – 19:00",
+        "NL": "18:00 – 19:00",
+        "EN": "18:00 – 19:00",
+        "PAP": "18:00 – 19:00"
+       }
+      },
+      {
+       "code": "T10",
+       "label": {
+        "ES": "19:00 – 23:00",
+        "NL": "19:00 – 23:00",
+        "EN": "19:00 – 23:00",
+        "PAP": "19:00 – 23:00"
+       }
+      },
+      {
+       "code": "T11",
+       "label": {
+        "ES": "Después de las 23:00",
+        "NL": "Na 23:00",
+        "EN": "After 23:00",
+        "PAP": "Despues di 23:00"
+       }
+      },
+      {
+       "code": "T97",
+       "label": {
+        "ES": "Varía, no tengo un horario fijo",
+        "NL": "Wisselend, ik heb geen vaste tijd",
+        "EN": "It varies, I have no fixed schedule",
+        "PAP": "Ta varia, mi no tin un ora fiho"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true
+    },
+    {
+     "id": "B8_HoraVuelta",
+     "type": "radio",
+     "text": {
+      "ES": "¿A qué hora emprende normalmente el regreso?",
+      "NL": "Hoe laat begint u gewoonlijk aan de terugreis?",
+      "EN": "What time do you usually start the return journey?",
+      "PAP": "Ki ora bo ta kuminsá e biahe di bolbe normalmente?"
+     },
+     "options": [
+      {
+       "code": "T1",
+       "label": {
+        "ES": "Antes de las 06:00",
+        "NL": "Vóór 06:00",
+        "EN": "Before 06:00",
+        "PAP": "Promé ku 06:00"
+       }
+      },
+      {
+       "code": "T2",
+       "label": {
+        "ES": "06:00 – 07:00",
+        "NL": "06:00 – 07:00",
+        "EN": "06:00 – 07:00",
+        "PAP": "06:00 – 07:00"
+       }
+      },
+      {
+       "code": "T3",
+       "label": {
+        "ES": "07:00 – 08:00",
+        "NL": "07:00 – 08:00",
+        "EN": "07:00 – 08:00",
+        "PAP": "07:00 – 08:00"
+       }
+      },
+      {
+       "code": "T4",
+       "label": {
+        "ES": "08:00 – 09:00",
+        "NL": "08:00 – 09:00",
+        "EN": "08:00 – 09:00",
+        "PAP": "08:00 – 09:00"
+       }
+      },
+      {
+       "code": "T5",
+       "label": {
+        "ES": "09:00 – 12:00",
+        "NL": "09:00 – 12:00",
+        "EN": "09:00 – 12:00",
+        "PAP": "09:00 – 12:00"
+       }
+      },
+      {
+       "code": "T6",
+       "label": {
+        "ES": "12:00 – 16:00",
+        "NL": "12:00 – 16:00",
+        "EN": "12:00 – 16:00",
+        "PAP": "12:00 – 16:00"
+       }
+      },
+      {
+       "code": "T7",
+       "label": {
+        "ES": "16:00 – 17:00",
+        "NL": "16:00 – 17:00",
+        "EN": "16:00 – 17:00",
+        "PAP": "16:00 – 17:00"
+       }
+      },
+      {
+       "code": "T8",
+       "label": {
+        "ES": "17:00 – 18:00",
+        "NL": "17:00 – 18:00",
+        "EN": "17:00 – 18:00",
+        "PAP": "17:00 – 18:00"
+       }
+      },
+      {
+       "code": "T9",
+       "label": {
+        "ES": "18:00 – 19:00",
+        "NL": "18:00 – 19:00",
+        "EN": "18:00 – 19:00",
+        "PAP": "18:00 – 19:00"
+       }
+      },
+      {
+       "code": "T10",
+       "label": {
+        "ES": "19:00 – 23:00",
+        "NL": "19:00 – 23:00",
+        "EN": "19:00 – 23:00",
+        "PAP": "19:00 – 23:00"
+       }
+      },
+      {
+       "code": "T11",
+       "label": {
+        "ES": "Después de las 23:00",
+        "NL": "Na 23:00",
+        "EN": "After 23:00",
+        "PAP": "Despues di 23:00"
+       }
+      },
+      {
+       "code": "T97",
+       "label": {
+        "ES": "Varía, no tengo un horario fijo",
+        "NL": "Wisselend, ik heb geen vaste tijd",
+        "EN": "It varies, I have no fixed schedule",
+        "PAP": "Ta varia, mi no tin un ora fiho"
+       }
+      },
+      {
+       "code": "T98",
+       "label": {
+        "ES": "No regreso el mismo día (solo en B8_HoraVuelta)",
+        "NL": "Ik kom niet dezelfde dag terug (alleen in B8_HoraVuelta)",
+        "EN": "I do not return the same day (only in B8_HoraVuelta)",
+        "PAP": "Mi no ta bolbe e mesun dia (solamente den B8_HoraVuelta)"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true
+    },
+    {
+     "id": "B9_Modo",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cómo hace normalmente ese desplazamiento?",
+      "NL": "Hoe maakt u die verplaatsing gewoonlijk?",
+      "EN": "How do you usually make that trip?",
+      "PAP": "Kon bo ta hasi e biahe ei normalmente?"
+     },
+     "hint": {
+      "ES": "Si usa varios medios, indique aquel en el que recorre la mayor distancia.",
+      "NL": "Gebruikt u meerdere vervoermiddelen, geef dan het middel op waarmee u de grootste afstand aflegt.",
+      "EN": "If you use several means, indicate the one in which you cover the greatest distance.",
+      "PAP": "Si bo ta usa vários medio, indiká esun ku bo ta rekoré e mayor distansia."
+     },
+     "options": [
+      {
+       "code": "M1",
+       "label": {
+        "ES": "Automóvil propio, conduciendo",
+        "NL": "Eigen auto, zelf rijdend",
+        "EN": "Own car, driving",
+        "PAP": "Outo propio, ta maneha"
+       }
+      },
+      {
+       "code": "M2",
+       "label": {
+        "ES": "Automóvil propio, como acompañante",
+        "NL": "Eigen auto, als meerijder",
+        "EN": "Own car, as passenger",
+        "PAP": "Outo propio, komo pasahero"
+       }
+      },
+      {
+       "code": "M3",
+       "label": {
+        "ES": "Me lleva otra persona",
+        "NL": "Iemand anders brengt mij",
+        "EN": "Someone else gives me a lift",
+        "PAP": "Un otro hende ta hiba mi"
+       }
+      },
+      {
+       "code": "M4",
+       "label": {
+        "ES": "Scooter o motocicleta",
+        "NL": "Scooter of motor",
+        "EN": "Scooter or motorcycle",
+        "PAP": "Skuter òf motosaikel"
+       }
+      },
+      {
+       "code": "M5",
+       "label": {
+        "ES": "Bicicleta o fatbike",
+        "NL": "Fiets of fatbike",
+        "EN": "Bicycle or fatbike",
+        "PAP": "Baiskel òf fatbike"
+       }
+      },
+      {
+       "code": "M6",
+       "label": {
+        "ES": "Caminando",
+        "NL": "Lopend",
+        "EN": "Walking",
+        "PAP": "Na pia"
+       }
+      },
+      {
+       "code": "M7",
+       "label": {
+        "ES": "Taxi",
+        "NL": "Taxi",
+        "EN": "Taxi",
+        "PAP": "Taxi"
+       }
+      },
+      {
+       "code": "M8",
+       "label": {
+        "ES": "Bus o van existente",
+        "NL": "Bestaande bus of busje",
+        "EN": "Existing bus or van",
+        "PAP": "Bùs òf van eksistente"
+       }
+      },
+      {
+       "code": "M9",
+       "label": {
+        "ES": "Transporte del empleador",
+        "NL": "Vervoer van de werkgever",
+        "EN": "Employer-provided transport",
+        "PAP": "Transporte di e dunadó di trabou"
+       }
+      },
+      {
+       "code": "M10",
+       "label": {
+        "ES": "Transporte escolar",
+        "NL": "Schoolvervoer",
+        "EN": "School transport",
+        "PAP": "Transporte skolar"
+       }
+      },
+      {
+       "code": "M11",
+       "label": {
+        "ES": "Vehículo alquilado",
+        "NL": "Huurauto",
+        "EN": "Rental vehicle",
+        "PAP": "Vehíkulo di hür"
+       }
+      },
+      {
+       "code": "M99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true
+    },
+    {
+     "id": "B10_Duracion",
+     "type": "number",
+     "text": {
+      "ES": "¿Cuántos minutos tarda aproximadamente en ese desplazamiento, de puerta a puerta?",
+      "NL": "Hoeveel minuten duurt die verplaatsing ongeveer, van deur tot deur?",
+      "EN": "Approximately how many minutes does that trip take you, door to door?",
+      "PAP": "Mas o ménos kuantu minüt e biahe ei ta dura bo, di porta pa porta?"
+     },
+     "min": 1,
+     "max": 120,
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     },
+     "required": true
+    },
+    {
+     "id": "B11_Gasto",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuánto gasta usted en promedio por semana en transporte? Considere combustible, taxi, van, mantenimiento y otros gastos de transporte.",
+      "NL": "Hoeveel geeft u gemiddeld per week uit aan vervoer? Denk aan brandstof, taxi, busje, onderhoud en andere vervoerskosten.",
+      "EN": "How much do you spend on transport in an average week? Consider fuel, taxi, van, maintenance and other transport costs.",
+      "PAP": "Kuantu bo ta gasta pa término medio pa siman na transporte? Konsiderá gasolin, taksi, van, mantenshon i otro gastunan di transporte."
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "GST1",
+       "label": {
+        "ES": "Menos de $10",
+        "NL": "Minder dan $10",
+        "EN": "Less than $10",
+        "PAP": "Ménos ku $10"
+       }
+      },
+      {
+       "code": "GST2",
+       "label": {
+        "ES": "De $10 a menos de $25",
+        "NL": "Van $10 tot minder dan $25",
+        "EN": "From $10 to less than $25",
+        "PAP": "For di $10 te ménos ku $25"
+       }
+      },
+      {
+       "code": "GST3",
+       "label": {
+        "ES": "De $25 a menos de $50",
+        "NL": "Van $25 tot minder dan $50",
+        "EN": "From $25 to less than $50",
+        "PAP": "For di $25 te ménos ku $50"
+       }
+      },
+      {
+       "code": "GST4",
+       "label": {
+        "ES": "De $50 a menos de $75",
+        "NL": "Van $50 tot minder dan $75",
+        "EN": "From $50 to less than $75",
+        "PAP": "For di $50 te ménos ku $75"
+       }
+      },
+      {
+       "code": "GST5",
+       "label": {
+        "ES": "De $75 a menos de $100",
+        "NL": "Van $75 tot minder dan $100",
+        "EN": "From $75 to less than $100",
+        "PAP": "For di $75 te ménos ku $100"
+       }
+      },
+      {
+       "code": "GST6",
+       "label": {
+        "ES": "$100 o más",
+        "NL": "$100 of meer",
+        "EN": "$100 or more",
+        "PAP": "$100 òf mas"
+       }
+      },
+      {
+       "code": "GST9",
+       "label": {
+        "ES": "No lo sé",
+        "NL": "Weet ik niet",
+        "EN": "I don't know",
+        "PAP": "Mi no sa"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B12_SegundoDestino",
+     "type": "radio",
+     "text": {
+      "ES": "Además del anterior, ¿hay otro barrio al que se desplace con frecuencia?",
+      "NL": "Is er, naast de vorige, nog een andere wijk waar u vaak naartoe gaat?",
+      "EN": "Besides the one above, is there another neighbourhood you travel to frequently?",
+      "PAP": "Fuera di esun anterior, tin un otro bario ku bo ta bai frekuentemente?"
+     },
+     "options": [
+      {
+       "code": "BRR01",
+       "label": {
+        "ES": "Amboina",
+        "NL": "Amboina",
+        "EN": "Amboina",
+        "PAP": "Amboina"
+       }
+      },
+      {
+       "code": "BRR02",
+       "label": {
+        "ES": "Antriol Pariba",
+        "NL": "Antriol Pariba",
+        "EN": "Antriol Pariba",
+        "PAP": "Antriol Pariba"
+       }
+      },
+      {
+       "code": "BRR03",
+       "label": {
+        "ES": "Antriol Pabou",
+        "NL": "Antriol Pabou",
+        "EN": "Antriol Pabou",
+        "PAP": "Antriol Pabou"
+       }
+      },
+      {
+       "code": "BRR04",
+       "label": {
+        "ES": "Belnem",
+        "NL": "Belnem",
+        "EN": "Belnem",
+        "PAP": "Belnem"
+       }
+      },
+      {
+       "code": "BRR05",
+       "label": {
+        "ES": "Hato",
+        "NL": "Hato",
+        "EN": "Hato",
+        "PAP": "Hato"
+       }
+      },
+      {
+       "code": "BRR06",
+       "label": {
+        "ES": "Lagun Hill",
+        "NL": "Lagun Hill",
+        "EN": "Lagun Hill",
+        "PAP": "Lagun Hill"
+       }
+      },
+      {
+       "code": "BRR07",
+       "label": {
+        "ES": "Lima",
+        "NL": "Lima",
+        "EN": "Lima",
+        "PAP": "Lima"
+       }
+      },
+      {
+       "code": "BRR08",
+       "label": {
+        "ES": "Mexico",
+        "NL": "Mexico",
+        "EN": "Mexico",
+        "PAP": "Mexico"
+       }
+      },
+      {
+       "code": "BRR09",
+       "label": {
+        "ES": "Nawati Noord",
+        "NL": "Nawati Noord",
+        "EN": "Nawati Noord",
+        "PAP": "Nawati Noord"
+       }
+      },
+      {
+       "code": "BRR10",
+       "label": {
+        "ES": "Nawati Zuid",
+        "NL": "Nawati Zuid",
+        "EN": "Nawati Zuid",
+        "PAP": "Nawati Zuid"
+       }
+      },
+      {
+       "code": "BRR11",
+       "label": {
+        "ES": "Nikiboko",
+        "NL": "Nikiboko",
+        "EN": "Nikiboko",
+        "PAP": "Nikiboko"
+       }
+      },
+      {
+       "code": "BRR12",
+       "label": {
+        "ES": "Noord Saliña",
+        "NL": "Noord Saliña",
+        "EN": "Noord Saliña",
+        "PAP": "Noord Saliña"
+       }
+      },
+      {
+       "code": "BRR13",
+       "label": {
+        "ES": "Playa (Centro)",
+        "NL": "Playa (centrum)",
+        "EN": "Playa (town centre)",
+        "PAP": "Playa (Sentro)"
+       }
+      },
+      {
+       "code": "BRR14",
+       "label": {
+        "ES": "Playa Pariba",
+        "NL": "Playa Pariba",
+        "EN": "Playa Pariba",
+        "PAP": "Playa Pariba"
+       }
+      },
+      {
+       "code": "BRR15",
+       "label": {
+        "ES": "Playa Pabou",
+        "NL": "Playa Pabou",
+        "EN": "Playa Pabou",
+        "PAP": "Playa Pabou"
+       }
+      },
+      {
+       "code": "BRR16",
+       "label": {
+        "ES": "Republiek",
+        "NL": "Republiek",
+        "EN": "Republiek",
+        "PAP": "Republiek"
+       }
+      },
+      {
+       "code": "BRR17",
+       "label": {
+        "ES": "Rincon Noord",
+        "NL": "Rincon Noord",
+        "EN": "Rincon Noord",
+        "PAP": "Rincon Noord"
+       }
+      },
+      {
+       "code": "BRR18",
+       "label": {
+        "ES": "Rincon Zuid",
+        "NL": "Rincon Zuid",
+        "EN": "Rincon Zuid",
+        "PAP": "Rincon Zuid"
+       }
+      },
+      {
+       "code": "BRR19",
+       "label": {
+        "ES": "Sabadeco",
+        "NL": "Sabadeco",
+        "EN": "Sabadeco",
+        "PAP": "Sabadeco"
+       }
+      },
+      {
+       "code": "BRR20",
+       "label": {
+        "ES": "Sabana",
+        "NL": "Sabana",
+        "EN": "Sabana",
+        "PAP": "Sabana"
+       }
+      },
+      {
+       "code": "BRR21",
+       "label": {
+        "ES": "Santa Barbara",
+        "NL": "Santa Barbara",
+        "EN": "Santa Barbara",
+        "PAP": "Santa Barbara"
+       }
+      },
+      {
+       "code": "BRR22",
+       "label": {
+        "ES": "Tera Kora",
+        "NL": "Tera Kora",
+        "EN": "Tera Kora",
+        "PAP": "Tera Kora"
+       }
+      },
+      {
+       "code": "BRR99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ],
+     "cond": {
+      "q": "B1_ViajaFuera",
+      "op": "=",
+      "v": "Si"
+     }
+    },
+    {
+     "id": "B13_ViajeNoRealizado",
+     "type": "radio",
+     "text": {
+      "ES": "En el último mes, ¿hubo alguna ocasión en que usted necesitara ir a algún lugar y no pudiera hacerlo porque no tenía cómo transportarse?",
+      "NL": "Is het de afgelopen maand voorgekomen dat u ergens naartoe moest en dat niet kon omdat u geen vervoer had?",
+      "EN": "In the past month, was there any occasion when you needed to go somewhere and could not because you had no way of getting there?",
+      "PAP": "Den e último luna, tabatin un okashon ku bo mester a bai un kaminda i bo no por a hasi esei pasobra bo no tabatin kon bai?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "V2",
+       "label": {
+        "ES": "Sí, varias veces",
+        "NL": "Ja, meerdere keren",
+        "EN": "Yes, several times",
+        "PAP": "Sí, vários bes"
+       }
+      },
+      {
+       "code": "V1",
+       "label": {
+        "ES": "Sí, una vez",
+        "NL": "Ja, één keer",
+        "EN": "Yes, once",
+        "PAP": "Sí, un bes"
+       }
+      },
+      {
+       "code": "V0",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      },
+      {
+       "code": "V9",
+       "label": {
+        "ES": "No lo recuerdo",
+        "NL": "Weet ik niet meer",
+        "EN": "I don't remember",
+        "PAP": "Mi no ta korda"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B14_MotivoNoRealizado",
+     "type": "check",
+     "text": {
+      "ES": "¿De qué se trataba? Puede elegir varias opciones.",
+      "NL": "Waar ging het om? U kunt meerdere opties kiezen.",
+      "EN": "What was it for? You may choose more than one option.",
+      "PAP": "Di kiko e tabata trata? Bo por skohe mas ku un opshon."
+     },
+     "maxSelect": 3,
+     "cond": {
+      "q": "B13_ViajeNoRealizado",
+      "op": "in",
+      "v": [
+       "V1",
+       "V2"
+      ]
+     },
+     "options": [
+      {
+       "code": "N1",
+       "label": {
+        "ES": "Atención de salud (médico, hospital, farmacia)",
+        "NL": "Zorg (huisarts, ziekenhuis, apotheek)",
+        "EN": "Healthcare (doctor, hospital, pharmacy)",
+        "PAP": "Atenshon di salú (dòkter, hospital, botika)"
+       }
+      },
+      {
+       "code": "N2",
+       "label": {
+        "ES": "Trabajo o entrevista de trabajo",
+        "NL": "Werk of sollicitatiegesprek",
+        "EN": "Work or a job interview",
+        "PAP": "Trabou òf entrevista di trabou"
+       }
+      },
+      {
+       "code": "N3",
+       "label": {
+        "ES": "Escuela, estudio o formación",
+        "NL": "School, opleiding of scholing",
+        "EN": "School, study or training",
+        "PAP": "Skol, studio òf formashon"
+       }
+      },
+      {
+       "code": "N4",
+       "label": {
+        "ES": "Trámite de gobierno",
+        "NL": "Overheidszaak",
+        "EN": "Government business",
+        "PAP": "Trámite di gobièrnu"
+       }
+      },
+      {
+       "code": "N5",
+       "label": {
+        "ES": "Compras de alimentos u otras necesidades",
+        "NL": "Boodschappen: voedsel of andere benodigdheden",
+        "EN": "Shopping for food or other necessities",
+        "PAP": "Kumpramentu di kuminda òf otro nesesidat"
+       }
+      },
+      {
+       "code": "N6",
+       "label": {
+        "ES": "Visitar familia o amistades",
+        "NL": "Familie of vrienden bezoeken",
+        "EN": "Visiting family or friends",
+        "PAP": "Bishitá famia òf amigunan"
+       }
+      },
+      {
+       "code": "N7",
+       "label": {
+        "ES": "Iglesia o actividad religiosa",
+        "NL": "Kerk of religieuze activiteit",
+        "EN": "Church or religious activity",
+        "PAP": "Misa òf aktividat religioso"
+       }
+      },
+      {
+       "code": "N8",
+       "label": {
+        "ES": "Actividad deportiva o recreativa",
+        "NL": "Sportieve of recreatieve activiteit",
+        "EN": "Sporting or recreational activity",
+        "PAP": "Aktividat deportivo òf rekreativo"
+       }
+      },
+      {
+       "code": "N9",
+       "label": {
+        "ES": "Llevar o recoger a un familiar",
+        "NL": "Een familielid brengen of ophalen",
+        "EN": "Dropping off or picking up a family member",
+        "PAP": "Hiba òf buska un famia"
+       }
+      },
+      {
+       "code": "N99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ]
+    },
+    {
+     "id": "B15_Domingo",
+     "type": "radio",
+     "text": {
+      "ES": "Si existiera un servicio de autobús, ¿lo usaría los domingos?",
+      "NL": "Als er een busdienst zou bestaan, zou u die op zondag gebruiken?",
+      "EN": "If a bus service existed, would you use it on Sundays?",
+      "PAP": "Si tabatin un servisio di bùs, lo bo us'é riba djadumingu?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "DOM2",
+       "label": {
+        "ES": "Sí, regularmente",
+        "NL": "Ja, regelmatig",
+        "EN": "Yes, regularly",
+        "PAP": "Sí, regularmente"
+       }
+      },
+      {
+       "code": "DOM1",
+       "label": {
+        "ES": "Sí, ocasionalmente",
+        "NL": "Ja, af en toe",
+        "EN": "Yes, occasionally",
+        "PAP": "Sí, okashonalmente"
+       }
+      },
+      {
+       "code": "DOM0",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      },
+      {
+       "code": "DOM9",
+       "label": {
+        "ES": "No lo sé",
+        "NL": "Weet ik niet",
+        "EN": "I don't know",
+        "PAP": "Mi no sa"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": {
+    "ES": "Bloque D — Situación económica y perfil",
+    "NL": "Blok D — Economische situatie en profiel",
+    "EN": "Block D — Economic situation and profile",
+    "PAP": "Blòk D — Situashon ekonómiko i perfil"
+   },
+   "questions": [
+    {
+     "id": "D1_Ingreso",
+     "type": "radio",
+     "text": {
+      "ES": "Sumando los ingresos de todas las personas de su hogar, ¿en qué rango se encuentra el ingreso NETO MENSUAL de su hogar?",
+      "NL": "Als u het inkomen van alle personen in uw huishouden bij elkaar optelt, in welke categorie valt dan het NETTO MAANDINKOMEN van uw huishouden?",
+      "EN": "Adding up the income of everyone in your household, which band does your household's NET MONTHLY income fall into?",
+      "PAP": "Sumando e entradanan di tur e personanan den bo kas, den ki rango e entrada NETO PA LUNA di bo kas ta kai?"
+     },
+     "hint": {
+      "ES": "Ingreso neto es lo que su hogar recibe efectivamente, ya descontados los impuestos y las cotizaciones sociales y de salud. Incluya salarios, pensiones (AOV), subsidios y cualquier otro ingreso.",
+      "NL": "Netto-inkomen is wat uw huishouden werkelijk ontvangt, na aftrek van belastingen en de sociale- en zorgpremies. Tel salarissen, pensioenen (AOV), toeslagen en elk ander inkomen mee.",
+      "EN": "Net income is what your household actually receives, after tax and social and health contributions have been deducted. Include wages, pensions (AOV), benefits and any other income.",
+      "PAP": "Entrada neto ta loke bo kas ta risibí realmente, despues di deduksí belasting i e kotisashonnan sosial i di salú. Inkluí salario, pensharis (AOV), suplemento i kualke otro entrada."
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "I1",
+       "label": {
+        "ES": "Menos de $1.000",
+        "NL": "Minder dan $1.000",
+        "EN": "Less than $1,000",
+        "PAP": "Ménos ku $1.000"
+       }
+      },
+      {
+       "code": "I2",
+       "label": {
+        "ES": "De $1.000 a menos de $1.500",
+        "NL": "Van $1.000 tot minder dan $1.500",
+        "EN": "From $1,000 to less than $1,500",
+        "PAP": "For di $1.000 te ménos ku $1.500"
+       }
+      },
+      {
+       "code": "I3",
+       "label": {
+        "ES": "De $1.500 a menos de $2.000",
+        "NL": "Van $1.500 tot minder dan $2.000",
+        "EN": "From $1,500 to less than $2,000",
+        "PAP": "For di $1.500 te ménos ku $2.000"
+       }
+      },
+      {
+       "code": "I4",
+       "label": {
+        "ES": "De $2.000 a menos de $3.000",
+        "NL": "Van $2.000 tot minder dan $3.000",
+        "EN": "From $2,000 to less than $3,000",
+        "PAP": "For di $2.000 te ménos ku $3.000"
+       }
+      },
+      {
+       "code": "I5",
+       "label": {
+        "ES": "De $3.000 a menos de $4.000",
+        "NL": "Van $3.000 tot minder dan $4.000",
+        "EN": "From $3,000 to less than $4,000",
+        "PAP": "For di $3.000 te ménos ku $4.000"
+       }
+      },
+      {
+       "code": "I6",
+       "label": {
+        "ES": "De $4.000 a menos de $6.000",
+        "NL": "Van $4.000 tot minder dan $6.000",
+        "EN": "From $4,000 to less than $6,000",
+        "PAP": "For di $4.000 te ménos ku $6.000"
+       }
+      },
+      {
+       "code": "I7",
+       "label": {
+        "ES": "$6.000 o más",
+        "NL": "$6.000 of meer",
+        "EN": "$6,000 or more",
+        "PAP": "$6.000 òf mas"
+       }
+      },
+      {
+       "code": "I98",
+       "label": {
+        "ES": "No lo sé",
+        "NL": "Weet ik niet",
+        "EN": "I don't know",
+        "PAP": "Mi no sa"
+       }
+      },
+      {
+       "code": "I99",
+       "label": {
+        "ES": "Prefiero no responder",
+        "NL": "Zeg ik liever niet",
+        "EN": "I prefer not to answer",
+        "PAP": "Mi ta preferá no kontestá"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D2_LlegarFinMes",
+     "type": "radio",
+     "text": {
+      "ES": "¿Qué tan difícil o fácil le resulta a su hogar llegar a fin de mes con el ingreso total del hogar?",
+      "NL": "Hoe moeilijk of makkelijk is het voor uw huishouden om met het totale huishoudinkomen rond te komen?",
+      "EN": "How difficult or easy is it for your household to make ends meet on the household's total income?",
+      "PAP": "Ki asina difísil òf fásil ta pa bo kas yega fin di luna ku e entrada total di e kas?"
+     },
+     "hint": {
+      "ES": "Con «llegar a fin de mes» nos referimos a poder pagar todos los gastos necesarios.",
+      "NL": "Met «rondkomen» bedoelen we alle noodzakelijke uitgaven kunnen betalen.",
+      "EN": "By «making ends meet» we mean being able to pay all necessary expenses.",
+      "PAP": "Ku «yega fin di luna» nos ke men por paga tur e gastunan nesesario."
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "RK1",
+       "label": {
+        "ES": "Muy difícil",
+        "NL": "Zeer moeilijk",
+        "EN": "Very difficult",
+        "PAP": "Masha difísil"
+       }
+      },
+      {
+       "code": "RK2",
+       "label": {
+        "ES": "Difícil",
+        "NL": "Moeilijk",
+        "EN": "Difficult",
+        "PAP": "Difísil"
+       }
+      },
+      {
+       "code": "RK3",
+       "label": {
+        "ES": "Más bien difícil",
+        "NL": "Eerder moeilijk",
+        "EN": "Rather difficult",
+        "PAP": "Mas bien difísil"
+       }
+      },
+      {
+       "code": "RK4",
+       "label": {
+        "ES": "Más bien fácil",
+        "NL": "Eerder makkelijk",
+        "EN": "Rather easy",
+        "PAP": "Mas bien fásil"
+       }
+      },
+      {
+       "code": "RK5",
+       "label": {
+        "ES": "Fácil",
+        "NL": "Makkelijk",
+        "EN": "Easy",
+        "PAP": "Fásil"
+       }
+      },
+      {
+       "code": "RK6",
+       "label": {
+        "ES": "Muy fácil",
+        "NL": "Zeer makkelijk",
+        "EN": "Very easy",
+        "PAP": "Masha fásil"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D3_GastoImprevisto",
+     "type": "radio",
+     "text": {
+      "ES": "¿Podría su hogar afrontar un gasto imprevisto necesario de $875 sin pedir dinero prestado?",
+      "NL": "Zou uw huishouden een noodzakelijke onverwachte uitgave van $875 kunnen opvangen zonder geld te lenen?",
+      "EN": "Could your household meet a necessary unexpected expense of $875 without borrowing money?",
+      "PAP": "Bo kas lo por a paga un gastu inesperá nesesario di $875 sin fia plaka?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ],
+     "required": true
+    },
+    {
+     "id": "D4_Empleo",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuál es su situación laboral actual?",
+      "NL": "Wat is uw huidige arbeidssituatie?",
+      "EN": "What is your current employment situation?",
+      "PAP": "Kua ta bo situashon laboral aktual?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "EMP1",
+       "label": {
+        "ES": "Empleado a tiempo completo",
+        "NL": "Voltijd in loondienst",
+        "EN": "Employed full time",
+        "PAP": "Empleá tempu kompleto"
+       }
+      },
+      {
+       "code": "EMP2",
+       "label": {
+        "ES": "Empleado a tiempo parcial",
+        "NL": "Deeltijd in loondienst",
+        "EN": "Employed part time",
+        "PAP": "Empleá tempu parsial"
+       }
+      },
+      {
+       "code": "EMP3",
+       "label": {
+        "ES": "Trabajador independiente",
+        "NL": "Zelfstandige",
+        "EN": "Self-employed",
+        "PAP": "Trahadó independiente"
+       }
+      },
+      {
+       "code": "EMP4",
+       "label": {
+        "ES": "Con más de un empleo",
+        "NL": "Meer dan één baan",
+        "EN": "Holding more than one job",
+        "PAP": "Ku mas ku un trabou"
+       }
+      },
+      {
+       "code": "EMP5",
+       "label": {
+        "ES": "Estudiante",
+        "NL": "Student",
+        "EN": "Student",
+        "PAP": "Studiante"
+       }
+      },
+      {
+       "code": "EMP6",
+       "label": {
+        "ES": "Pensionado (AOV)",
+        "NL": "Gepensioneerd (AOV)",
+        "EN": "Retired (AOV)",
+        "PAP": "Penshonado (AOV)"
+       }
+      },
+      {
+       "code": "EMP7",
+       "label": {
+        "ES": "Sin empleo, buscando trabajo",
+        "NL": "Zonder werk, op zoek naar werk",
+        "EN": "Not working, looking for work",
+        "PAP": "Sin trabou, ta buska trabou"
+       }
+      },
+      {
+       "code": "EMP8",
+       "label": {
+        "ES": "Sin empleo, no buscando",
+        "NL": "Zonder werk, niet op zoek",
+        "EN": "Not working, not looking",
+        "PAP": "Sin trabou, no ta buska"
+       }
+      },
+      {
+       "code": "EMP9",
+       "label": {
+        "ES": "Incapacidad laboral",
+        "NL": "Arbeidsongeschikt",
+        "EN": "Unable to work",
+        "PAP": "Inkapasidat laboral"
+       }
+      },
+      {
+       "code": "EMP99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D5_Educacion",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuál es el nivel educativo más alto que ha completado con diploma?",
+      "NL": "Wat is het hoogste opleidingsniveau dat u met een diploma hebt afgerond?",
+      "EN": "What is the highest level of education you have completed with a diploma?",
+      "PAP": "Kua ta e nivel edukativo mas haltu ku bo a kompletá ku diploma?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "O1",
+       "label": {
+        "ES": "Escuela primaria",
+        "NL": "Basisschool",
+        "EN": "Primary school",
+        "PAP": "Skol básiko"
+       }
+      },
+      {
+       "code": "O2",
+       "label": {
+        "ES": "VSBO / VMBO — rama profesional (PBL, PKL, TVET)",
+        "NL": "VSBO / VMBO — beroepsgerichte leerweg (PBL, PKL, TVET)",
+        "EN": "VSBO / VMBO — vocational track (PBL, PKL, TVET)",
+        "PAP": "VSBO / VMBO — ramo profeshonal (PBL, PKL, TVET)"
+       }
+      },
+      {
+       "code": "O3",
+       "label": {
+        "ES": "VSBO / VMBO — rama teórica (TL, GL) o Mavo",
+        "NL": "VSBO / VMBO — theoretische leerweg (TL, GL) of Mavo",
+        "EN": "VSBO / VMBO — theoretical track (TL, GL) or Mavo",
+        "PAP": "VSBO / VMBO — ramo teóriko (TL, GL) òf Mavo"
+       }
+      },
+      {
+       "code": "O4",
+       "label": {
+        "ES": "Havo, VWO o Gymnasium",
+        "NL": "Havo, VWO of Gymnasium",
+        "EN": "Havo, VWO or Gymnasium",
+        "PAP": "Havo, VWO òf Gymnasium"
+       }
+      },
+      {
+       "code": "O5",
+       "label": {
+        "ES": "MBO / SBO nivel 1",
+        "NL": "MBO / SBO niveau 1",
+        "EN": "MBO / SBO level 1",
+        "PAP": "MBO / SBO nivel 1"
+       }
+      },
+      {
+       "code": "O6",
+       "label": {
+        "ES": "MBO / SBO nivel 2 a 4",
+        "NL": "MBO / SBO niveau 2 tot en met 4",
+        "EN": "MBO / SBO levels 2 to 4",
+        "PAP": "MBO / SBO nivel 2 te 4"
+       }
+      },
+      {
+       "code": "O7",
+       "label": {
+        "ES": "HBO o universidad — bachelor",
+        "NL": "HBO of universiteit — bachelor",
+        "EN": "HBO or university — bachelor's",
+        "PAP": "HBO òf universidat — bachelor"
+       }
+      },
+      {
+       "code": "O8",
+       "label": {
+        "ES": "HBO o universidad — máster o superior",
+        "NL": "HBO of universiteit — master of hoger",
+        "EN": "HBO or university — master's or higher",
+        "PAP": "HBO òf universidat — master òf mas haltu"
+       }
+      },
+      {
+       "code": "O9",
+       "label": {
+        "ES": "Título obtenido fuera de Bonaire (por ejemplo CXC/CSEC, high school u otro sistema), especifique cuál:",
+        "NL": "Diploma behaald buiten Bonaire (bijvoorbeeld CXC/CSEC, high school of een ander stelsel), geef aan welk:",
+        "EN": "Qualification obtained outside Bonaire (for example CXC/CSEC, high school or another system), please specify which:",
+        "PAP": "Título optené pafó di Boneiru (por ehèmpel CXC/CSEC, high school òf otro sistema), spesifiká kua:"
+       }
+      },
+      {
+       "code": "O10",
+       "label": {
+        "ES": "Ninguno de estos",
+        "NL": "Geen van deze",
+        "EN": "None of these",
+        "PAP": "Ningun di esakinan"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D6_Genero",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuál es su género?",
+      "NL": "Wat is uw geslacht?",
+      "EN": "What is your gender?",
+      "PAP": "Kua ta bo sekso?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "GEN1",
+       "label": {
+        "ES": "Hombre",
+        "NL": "Man",
+        "EN": "Man",
+        "PAP": "Hòmber"
+       }
+      },
+      {
+       "code": "GEN2",
+       "label": {
+        "ES": "Mujer",
+        "NL": "Vrouw",
+        "EN": "Woman",
+        "PAP": "Muhé"
+       }
+      },
+      {
+       "code": "GEN9",
+       "label": {
+        "ES": "Prefiero no responder",
+        "NL": "Zeg ik liever niet",
+        "EN": "I prefer not to answer",
+        "PAP": "Mi ta preferá no kontestá"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D7_Discapacidad",
+     "type": "radio",
+     "text": {
+      "ES": "¿Tiene usted alguna condición física o de salud que dificulte sus desplazamientos?",
+      "NL": "Hebt u een lichamelijke of gezondheidsaandoening die uw verplaatsingen bemoeilijkt?",
+      "EN": "Do you have a physical or health condition that makes it difficult for you to travel?",
+      "PAP": "Bo tin un kondishon físiko òf di salú ku ta hasi bo biahenan difísil?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "DIS1",
+       "label": {
+        "ES": "Sí, uso silla de ruedas",
+        "NL": "Ja, ik gebruik een rolstoel",
+        "EN": "Yes, I use a wheelchair",
+        "PAP": "Sí, mi ta usa stul di ruda"
+       }
+      },
+      {
+       "code": "DIS2",
+       "label": {
+        "ES": "Sí, camino con dificultad o uso bastón",
+        "NL": "Ja, ik loop moeilijk of gebruik een stok",
+        "EN": "Yes, I have difficulty walking or use a stick",
+        "PAP": "Sí, mi ta kana ku difikultat òf mi ta usa garoti"
+       }
+      },
+      {
+       "code": "DIS3",
+       "label": {
+        "ES": "Sí, dificultad visual o auditiva",
+        "NL": "Ja, een visuele of auditieve beperking",
+        "EN": "Yes, a visual or hearing difficulty",
+        "PAP": "Sí, difikultat visual òf ouditivo"
+       }
+      },
+      {
+       "code": "DIS4",
+       "label": {
+        "ES": "Sí, otra",
+        "NL": "Ja, anders",
+        "EN": "Yes, another",
+        "PAP": "Sí, otro"
+       }
+      },
+      {
+       "code": "DIS0",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      },
+      {
+       "code": "DIS9",
+       "label": {
+        "ES": "Prefiero no responder",
+        "NL": "Zeg ik liever niet",
+        "EN": "I prefer not to answer",
+        "PAP": "Mi ta preferá no kontestá"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D8_TiempoEnIsla",
+     "type": "radio",
+     "text": {
+      "ES": "¿Cuánto tiempo lleva viviendo en Bonaire?",
+      "NL": "Hoe lang woont u al op Bonaire?",
+      "EN": "How long have you been living in Bonaire?",
+      "PAP": "Kuantu tempu bo ta biba na Boneiru kaba?"
+     },
+     "required": true,
+     "options": [
+      {
+       "code": "R1",
+       "label": {
+        "ES": "Menos de 1 año",
+        "NL": "Minder dan 1 jaar",
+        "EN": "Less than 1 year",
+        "PAP": "Ménos ku 1 aña"
+       }
+      },
+      {
+       "code": "R2",
+       "label": {
+        "ES": "1 a 5 años",
+        "NL": "1 tot 5 jaar",
+        "EN": "1 to 5 years",
+        "PAP": "1 te 5 aña"
+       }
+      },
+      {
+       "code": "R3",
+       "label": {
+        "ES": "6 a 10 años",
+        "NL": "6 tot 10 jaar",
+        "EN": "6 to 10 years",
+        "PAP": "6 te 10 aña"
+       }
+      },
+      {
+       "code": "R4",
+       "label": {
+        "ES": "Más de 10 años",
+        "NL": "Meer dan 10 jaar",
+        "EN": "More than 10 years",
+        "PAP": "Mas ku 10 aña"
+       }
+      },
+      {
+       "code": "R5",
+       "label": {
+        "ES": "Toda mi vida",
+        "NL": "Mijn hele leven",
+        "EN": "All my life",
+        "PAP": "Henter mi bida"
+       }
+      }
+     ]
+    },
+    {
+     "id": "D9_Escuela",
+     "type": "check",
+     "text": {
+      "ES": "¿A qué escuela o escuelas asisten los menores de su hogar?",
+      "NL": "Naar welke school of scholen gaan de minderjarigen in uw huishouden?",
+      "EN": "Which school or schools do the minors in your household attend?",
+      "PAP": "Na ki skol òf skolnan e menornan di bo kas ta bai?"
+     },
+     "hint": {
+      "ES": "Puede elegir varias.",
+      "NL": "U kunt er meerdere kiezen.",
+      "EN": "You may choose more than one.",
+      "PAP": "Bo por skohe mas ku un."
+     },
+     "cond": {
+      "q": "A3_MenoresEscolarizados",
+      "op": ">",
+      "v": 0
+     },
+     "options": [
+      {
+       "code": "SC01",
+       "label": {
+        "ES": "Kolegio San Luis Beltran",
+        "NL": "Kolegio San Luis Beltran",
+        "EN": "Kolegio San Luis Beltran",
+        "PAP": "Kolegio San Luis Beltran"
+       }
+      },
+      {
+       "code": "SC02",
+       "label": {
+        "ES": "Skol Amplio Papa Cornes",
+        "NL": "Skol Amplio Papa Cornes",
+        "EN": "Skol Amplio Papa Cornes",
+        "PAP": "Skol Amplio Papa Cornes"
+       }
+      },
+      {
+       "code": "SC03",
+       "label": {
+        "ES": "Kolegio Rayo di Solo",
+        "NL": "Kolegio Rayo di Solo",
+        "EN": "Kolegio Rayo di Solo",
+        "PAP": "Kolegio Rayo di Solo"
+       }
+      },
+      {
+       "code": "SC04",
+       "label": {
+        "ES": "Kolegio Strea Briante",
+        "NL": "Kolegio Strea Briante",
+        "EN": "Kolegio Strea Briante",
+        "PAP": "Kolegio Strea Briante"
+       }
+      },
+      {
+       "code": "SC05",
+       "label": {
+        "ES": "Kolegio San Bernardo",
+        "NL": "Kolegio San Bernardo",
+        "EN": "Kolegio San Bernardo",
+        "PAP": "Kolegio San Bernardo"
+       }
+      },
+      {
+       "code": "SC06",
+       "label": {
+        "ES": "Kolegio Kristu Bon Wardador",
+        "NL": "Kolegio Kristu Bon Wardador",
+        "EN": "Kolegio Kristu Bon Wardador",
+        "PAP": "Kolegio Kristu Bon Wardador"
+       }
+      },
+      {
+       "code": "SC07",
+       "label": {
+        "ES": "Pelikaan School",
+        "NL": "Pelikaan School",
+        "EN": "Pelikaan School",
+        "PAP": "Pelikaan School"
+       }
+      },
+      {
+       "code": "SC08",
+       "label": {
+        "ES": "Aquamarin",
+        "NL": "Aquamarin",
+        "EN": "Aquamarin",
+        "PAP": "Aquamarin"
+       }
+      },
+      {
+       "code": "SC09",
+       "label": {
+        "ES": "Het Koraal",
+        "NL": "Het Koraal",
+        "EN": "Het Koraal",
+        "PAP": "Het Koraal"
+       }
+      },
+      {
+       "code": "SC10",
+       "label": {
+        "ES": "KES",
+        "NL": "KES",
+        "EN": "KES",
+        "PAP": "KES"
+       }
+      },
+      {
+       "code": "SC11",
+       "label": {
+        "ES": "SGB SLP (Kaya Barakuda)",
+        "NL": "SGB SLP (Kaya Barakuda)",
+        "EN": "SGB SLP (Kaya Barakuda)",
+        "PAP": "SGB SLP (Kaya Barakuda)"
+       }
+      },
+      {
+       "code": "SC12",
+       "label": {
+        "ES": "SGB Liseo (Kaya Amsterdam)",
+        "NL": "SGB Liseo (Kaya Amsterdam)",
+        "EN": "SGB Liseo (Kaya Amsterdam)",
+        "PAP": "SGB Liseo (Kaya Amsterdam)"
+       }
+      },
+      {
+       "code": "SC13",
+       "label": {
+        "ES": "SGB VMBO (Kaya Frater Odulfinus)",
+        "NL": "SGB VMBO (Kaya Frater Odulfinus)",
+        "EN": "SGB VMBO (Kaya Frater Odulfinus)",
+        "PAP": "SGB VMBO (Kaya Frater Odulfinus)"
+       }
+      },
+      {
+       "code": "SC14",
+       "label": {
+        "ES": "SGB MBO Bonaire (Kaya Korona)",
+        "NL": "SGB MBO Bonaire (Kaya Korona)",
+        "EN": "SGB MBO Bonaire (Kaya Korona)",
+        "PAP": "SGB MBO Bonaire (Kaya Korona)"
+       }
+      },
+      {
+       "code": "SC15",
+       "label": {
+        "ES": "VSO / EOZ",
+        "NL": "VSO / EOZ",
+        "EN": "VSO / EOZ",
+        "PAP": "VSO / EOZ"
+       }
+      },
+      {
+       "code": "SC16",
+       "label": {
+        "ES": "FORMA",
+        "NL": "FORMA",
+        "EN": "FORMA",
+        "PAP": "FORMA"
+       }
+      },
+      {
+       "code": "SC99",
+       "label": {
+        "ES": "Otra, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": {
+    "ES": "Bloque E — Paradas y participación comunitaria",
+    "NL": "Blok E — Haltes en gemeenschapsparticipatie",
+    "EN": "Block E — Stops and community participation",
+    "PAP": "Blòk E — Paradanan i partisipashon komunitario"
+   },
+   "questions": [
+    {
+     "id": "E1_Servicios",
+     "type": "check",
+     "text": {
+      "ES": "¿Qué le parecería útil encontrar en una parada de autobús importante o punto de transbordo?",
+      "NL": "Wat zou u nuttig vinden om aan te treffen bij een belangrijke bushalte of een overstappunt?",
+      "EN": "What would you find useful to have at a major bus stop or transfer point?",
+      "PAP": "Kiko lo bo haña útil pa haña na un parada di bùs importante òf punto di transbordo?"
+     },
+     "hint": {
+      "ES": "Elija hasta 4 opciones.",
+      "NL": "Kies maximaal 4 opties.",
+      "EN": "Choose up to 4 options.",
+      "PAP": "Skohe te 4 opshon."
+     },
+     "maxSelect": 4,
+     "exclusive": "SRV00",
+     "options": [
+      {
+       "code": "SRV01",
+       "label": {
+        "ES": "Asientos con sombra",
+        "NL": "Zitplaatsen in de schaduw",
+        "EN": "Seating with shade",
+        "PAP": "Stul ku sombra"
+       }
+      },
+      {
+       "code": "SRV02",
+       "label": {
+        "ES": "Sendero peatonal seguro hacia mi destino",
+        "NL": "Een veilig voetpad naar mijn bestemming",
+        "EN": "A safe footpath to my destination",
+        "PAP": "Un kaminda di pia sigur pa mi destino"
+       }
+      },
+      {
+       "code": "SRV03",
+       "label": {
+        "ES": "Entrada y salida seguras y amplias, también para sillas de ruedas",
+        "NL": "Veilige en ruime in- en uitgang, ook voor rolstoelen",
+        "EN": "Safe, wide entry and exit, also for wheelchairs",
+        "PAP": "Entrada i salida sigur i hanchu, tambe pa stul di ruda"
+       }
+      },
+      {
+       "code": "SRV04",
+       "label": {
+        "ES": "Paso de cebra visible y seguro",
+        "NL": "Een goed zichtbaar en veilig zebrapad",
+        "EN": "A visible and safe pedestrian crossing",
+        "PAP": "Un pasada di seibra bisibel i sigur"
+       }
+      },
+      {
+       "code": "SRV05",
+       "label": {
+        "ES": "Iluminación",
+        "NL": "Verlichting",
+        "EN": "Lighting",
+        "PAP": "Iluminashon"
+       }
+      },
+      {
+       "code": "SRV06",
+       "label": {
+        "ES": "Información clara de horarios",
+        "NL": "Duidelijke informatie over de dienstregeling",
+        "EN": "Clear timetable information",
+        "PAP": "Informashon kla di orario"
+       }
+      },
+      {
+       "code": "SRV07",
+       "label": {
+        "ES": "Conexión con bicicleta o patinete compartido",
+        "NL": "Aansluiting op een deelfiets of deelstep",
+        "EN": "A link to a shared bicycle or scooter",
+        "PAP": "Konekshon ku baiskel òf step kompartí"
+       }
+      },
+      {
+       "code": "SRV08",
+       "label": {
+        "ES": "Estacionamiento para dejar mi auto",
+        "NL": "Parkeerplaats om mijn auto te laten staan",
+        "EN": "Parking where I can leave my car",
+        "PAP": "Parkeo pa laga mi outo"
+       }
+      },
+      {
+       "code": "SRV09",
+       "label": {
+        "ES": "Una tienda, minimercado o punto de paquetes",
+        "NL": "Een winkel, buurtsuper of pakketpunt",
+        "EN": "A shop, minimarket or parcel point",
+        "PAP": "Un tienda, minimerkado òf punto di pakète"
+       }
+      },
+      {
+       "code": "SRV10",
+       "label": {
+        "ES": "Conexión con un minibús de barrio",
+        "NL": "Aansluiting op een wijkbusje",
+        "EN": "A link to a neighbourhood minibus",
+        "PAP": "Konekshon ku un minibùs di bario"
+       }
+      },
+      {
+       "code": "SRV11",
+       "label": {
+        "ES": "Información sobre el barrio o su historia",
+        "NL": "Informatie over de wijk of haar geschiedenis",
+        "EN": "Information about the neighbourhood or its history",
+        "PAP": "Informashon tokante e bario òf su historia"
+       }
+      },
+      {
+       "code": "SRV99",
+       "label": {
+        "ES": "Otro, especifique:",
+        "NL": "Anders, namelijk:",
+        "EN": "Other, please specify:",
+        "PAP": "Otro, spesifiká:"
+       }
+      },
+      {
+       "code": "SRV00",
+       "label": {
+        "ES": "Nada en particular, solo abordar",
+        "NL": "Niets in het bijzonder, alleen instappen",
+        "EN": "Nothing in particular, just boarding",
+        "PAP": "Nada en partikular, djis subi"
+       }
+      }
+     ]
+    },
+    {
+     "id": "E2_Participar",
+     "type": "radio",
+     "text": {
+      "ES": "¿Le gustaría participar en las decisiones sobre la ubicación y el diseño de las paradas de su barrio?",
+      "NL": "Zou u willen meebeslissen over de plaats en het ontwerp van de haltes in uw wijk?",
+      "EN": "Would you like to take part in decisions about the location and design of the stops in your neighbourhood?",
+      "PAP": "Lo bo ke partisipá den e desishonnan tokante e lugá i e diseño di e paradanan di bo bario?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "Quiza",
+       "label": {
+        "ES": "Tal vez",
+        "NL": "Misschien",
+        "EN": "Maybe",
+        "PAP": "Kisas"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ]
+    },
+    {
+     "id": "E3_Mantenimiento",
+     "type": "radio",
+     "text": {
+      "ES": "¿Estaría dispuesto a ayudar ocasionalmente a mantener en buen estado la parada de su barrio, por ejemplo a través de un Sentro di Bario?",
+      "NL": "Zou u af en toe willen helpen de halte in uw wijk in goede staat te houden, bijvoorbeeld via een Sentro di Bario?",
+      "EN": "Would you be willing to help occasionally to keep the stop in your neighbourhood in good condition, for example through a Sentro di Bario?",
+      "PAP": "Lo bo ta dispuesto pa yuda de bes en kuando mantené e parada di bo bario na bon kondishon, por ehèmpel via un Sentro di Bario?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      },
+      {
+       "code": "NoSe",
+       "label": {
+        "ES": "Aún no lo sé",
+        "NL": "Dat weet ik nog niet",
+        "EN": "I don't know yet",
+        "PAP": "Ainda mi no sa"
+       }
+      }
+     ]
+    },
+    {
+     "id": "E4_Comentario",
+     "type": "textarea",
+     "text": {
+      "ES": "¿Tiene alguna sugerencia o comentario sobre el transporte público en Bonaire o en su barrio?",
+      "NL": "Hebt u suggesties of opmerkingen over het openbaar vervoer op Bonaire of in uw wijk?",
+      "EN": "Do you have any suggestions or comments about public transport in Bonaire or in your neighbourhood?",
+      "PAP": "Bo tin algun sugerensia òf komentario tokante transporte públiko na Boneiru òf den bo bario?"
+     },
+     "maxlen": 1000
+    },
+    {
+     "id": "E5_Seguridad",
+     "type": "matrix",
+     "text": {
+      "ES": "¿Se sentiría usted seguro/a esperando el autobús en una parada de su barrio?",
+      "NL": "Zou u zich veilig voelen terwijl u bij een halte in uw wijk op de bus wacht?",
+      "EN": "Would you feel safe waiting for the bus at a stop in your neighbourhood?",
+      "PAP": "Lo bo sinti bo sigur ta warda bùs na un parada den bo bario?"
+     },
+     "rows": [
+      {
+       "ES": "a) Durante el día",
+       "NL": "a) Overdag",
+       "EN": "a) During the day",
+       "PAP": "a) Durante dia"
+      },
+      {
+       "ES": "b) Durante la noche",
+       "NL": "b) 's Avonds en 's nachts",
+       "EN": "b) At night",
+       "PAP": "b) Durante anochi"
+      }
+     ],
+     "options": [
+      {
+       "code": "SEG1",
+       "label": {
+        "ES": "Sí, me sentiría seguro/a",
+        "NL": "Ja, ik zou me veilig voelen",
+        "EN": "Yes, I would feel safe",
+        "PAP": "Sí, lo mi sinti mi sigur"
+       }
+      },
+      {
+       "code": "SEG2",
+       "label": {
+        "ES": "Depende de la parada",
+        "NL": "Dat hangt van de halte af",
+        "EN": "It depends on the stop",
+        "PAP": "Ta dependé di e parada"
+       }
+      },
+      {
+       "code": "SEG3",
+       "label": {
+        "ES": "No me sentiría seguro/a",
+        "NL": "Nee, ik zou me niet veilig voelen",
+        "EN": "No, I would not feel safe",
+        "PAP": "Nò, lo mi no sinti mi sigur"
+       }
+      },
+      {
+       "code": "SEG9",
+       "label": {
+        "ES": "No lo sé",
+        "NL": "Weet ik niet",
+        "EN": "I don't know",
+        "PAP": "Mi no sa"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": {
+    "ES": "Bloque F — Cierre y datos de contacto",
+    "NL": "Blok F — Afsluiting en contactgegevens",
+    "EN": "Block F — Closing and contact details",
+    "PAP": "Blòk F — Sera i datonan di kontakto"
+   },
+   "questions": [
+    {
+     "id": "F2_ConsentContacto",
+     "type": "radio",
+     "text": {
+      "ES": "¿Desea dejar sus datos de contacto?",
+      "NL": "Wilt u uw contactgegevens achterlaten?",
+      "EN": "Would you like to leave your contact details?",
+      "PAP": "Bo ke laga bo datonan di kontakto?"
+     },
+     "options": [
+      {
+       "code": "Si",
+       "label": {
+        "ES": "Sí",
+        "NL": "Ja",
+        "EN": "Yes",
+        "PAP": "Sí"
+       }
+      },
+      {
+       "code": "No",
+       "label": {
+        "ES": "No",
+        "NL": "Nee",
+        "EN": "No",
+        "PAP": "Nò"
+       }
+      }
+     ],
+     "required": true
+    }
+   ]
+  }
+ ],
+ "b5b": {
+  "C1": [
+   {
+    "code": "L01",
+    "label": {
+     "ES": "Centro de Kralendijk / Playa (zona comercial)",
+     "NL": "Centrum van Kralendijk / Playa (winkelgebied)",
+     "EN": "Kralendijk town centre / Playa (commercial area)",
+     "PAP": "Sentro di Kralendijk / Playa (zona komersial)"
+    }
+   },
+   {
+    "code": "L02",
+    "label": {
+     "ES": "Kaya Industria (zona comercial e industrial)",
+     "NL": "Kaya Industria (handels- en industriegebied)",
+     "EN": "Kaya Industria (commercial and industrial area)",
+     "PAP": "Kaya Industria (zona komersial i industrial)"
+    }
+   },
+   {
+    "code": "L03",
+    "label": {
+     "ES": "Aeropuerto Flamingo",
+     "NL": "Flamingo Airport",
+     "EN": "Flamingo Airport",
+     "PAP": "Flamingo Airport"
+    }
+   },
+   {
+    "code": "L04",
+    "label": {
+     "ES": "Puerto / terminal de cruceros",
+     "NL": "Haven / cruiseterminal",
+     "EN": "Port / cruise terminal",
+     "PAP": "Haf / terminal di cruise"
+    }
+   },
+   {
+    "code": "L05",
+    "label": {
+     "ES": "Cargill — salinas (sur de la isla)",
+     "NL": "Cargill — zoutpannen (zuiden van het eiland)",
+     "EN": "Cargill — salt pans (south of the island)",
+     "PAP": "Cargill — salinja (sùit di e isla)"
+    }
+   },
+   {
+    "code": "L06",
+    "label": {
+     "ES": "Hospital Fundashon Mariadal",
+     "NL": "Hospital Fundashon Mariadal",
+     "EN": "Hospital Fundashon Mariadal",
+     "PAP": "Hospital Fundashon Mariadal"
+    }
+   },
+   {
+    "code": "L07",
+    "label": {
+     "ES": "Zona hotelera norte (Hato / Playa Pariba)",
+     "NL": "Hotelgebied noord (Hato / Playa Pariba)",
+     "EN": "Northern hotel area (Hato / Playa Pariba)",
+     "PAP": "Zona hotelero nòrt (Hato / Playa Pariba)"
+    }
+   },
+   {
+    "code": "L08",
+    "label": {
+     "ES": "Zona hotelera sur (Belnem)",
+     "NL": "Hotelgebied zuid (Belnem)",
+     "EN": "Southern hotel area (Belnem)",
+     "PAP": "Zona hotelero sùit (Belnem)"
+    }
+   },
+   {
+    "code": "L09",
+    "label": {
+     "ES": "Centro de Rincon",
+     "NL": "Centrum van Rincon",
+     "EN": "Rincon town centre",
+     "PAP": "Sentro di Rincon"
+    }
+   },
+   {
+    "code": "L99",
+    "label": {
+     "ES": "Otro lugar, escriba cuál en la casilla siguiente",
+     "NL": "Een andere plek, schrijf hieronder welke",
+     "EN": "Another place, please write which one in the next box",
+     "PAP": "Un otro lugá, skirbi kua den e kaha ku ta sigui"
+    }
+   }
+  ],
+  "C2": [
+   {
+    "code": "ED01",
+    "label": {
+     "ES": "SGB — Kaya Frater Odulfinus (VMBO)",
+     "NL": "SGB — Kaya Frater Odulfinus (VMBO)",
+     "EN": "SGB — Kaya Frater Odulfinus (VMBO)",
+     "PAP": "SGB — Kaya Frater Odulfinus (VMBO)"
+    }
+   },
+   {
+    "code": "ED02",
+    "label": {
+     "ES": "SGB — Kaya Amsterdam (Liseo)",
+     "NL": "SGB — Kaya Amsterdam (Liseo)",
+     "EN": "SGB — Kaya Amsterdam (Liseo)",
+     "PAP": "SGB — Kaya Amsterdam (Liseo)"
+    }
+   },
+   {
+    "code": "ED03",
+    "label": {
+     "ES": "SGB — Kaya Barakuda (SLP)",
+     "NL": "SGB — Kaya Barakuda (SLP)",
+     "EN": "SGB — Kaya Barakuda (SLP)",
+     "PAP": "SGB — Kaya Barakuda (SLP)"
+    }
+   },
+   {
+    "code": "ED04",
+    "label": {
+     "ES": "SGB — MBO Bonaire, Kaya Korona",
+     "NL": "SGB — MBO Bonaire, Kaya Korona",
+     "EN": "SGB — MBO Bonaire, Kaya Korona",
+     "PAP": "SGB — MBO Bonaire, Kaya Korona"
+    }
+   },
+   {
+    "code": "ED05",
+    "label": {
+     "ES": "FORMA",
+     "NL": "FORMA",
+     "EN": "FORMA",
+     "PAP": "FORMA"
+    }
+   },
+   {
+    "code": "ED06",
+    "label": {
+     "ES": "VSO / EOZ",
+     "NL": "VSO / EOZ",
+     "EN": "VSO / EOZ",
+     "PAP": "VSO / EOZ"
+    }
+   },
+   {
+    "code": "ED07",
+    "label": {
+     "ES": "Escuela primaria (indique cuál en la casilla siguiente)",
+     "NL": "Basisschool (geef hieronder aan welke)",
+     "EN": "Primary school (please indicate which one in the next box)",
+     "PAP": "Skol básiko (indiká kua den e kaha ku ta sigui)"
+    }
+   },
+   {
+    "code": "ED99",
+    "label": {
+     "ES": "Otro centro educativo",
+     "NL": "Andere onderwijsinstelling",
+     "EN": "Another educational institution",
+     "PAP": "Otro sentro edukativo"
+    }
+   }
+  ],
+  "C3": [
+   {
+    "code": "H01",
+    "label": {
+     "ES": "Hospital Fundashon Mariadal",
+     "NL": "Hospital Fundashon Mariadal",
+     "EN": "Hospital Fundashon Mariadal",
+     "PAP": "Hospital Fundashon Mariadal"
+    }
+   },
+   {
+    "code": "H02",
+    "label": {
+     "ES": "Consultorio de médico de familia",
+     "NL": "Huisartsenpraktijk",
+     "EN": "Family doctor's practice",
+     "PAP": "Konsultorio di dòkter di famia"
+    }
+   },
+   {
+    "code": "H03",
+    "label": {
+     "ES": "Farmacia (botika)",
+     "NL": "Apotheek (botika)",
+     "EN": "Pharmacy (botika)",
+     "PAP": "Botika"
+    }
+   },
+   {
+    "code": "H04",
+    "label": {
+     "ES": "Centro de rehabilitación o fisioterapia",
+     "NL": "Revalidatie- of fysiotherapiecentrum",
+     "EN": "Rehabilitation or physiotherapy centre",
+     "PAP": "Sentro di rehabilitashon òf fisioterapia"
+    }
+   },
+   {
+    "code": "H99",
+    "label": {
+     "ES": "Otro servicio de salud",
+     "NL": "Andere zorgvoorziening",
+     "EN": "Another health service",
+     "PAP": "Otro servisio di salú"
+    }
+   }
+  ],
+  "C4": [
+   {
+    "code": "CO01",
+    "label": {
+     "ES": "Van den Tweel — Kaya Industria 39",
+     "NL": "Van den Tweel — Kaya Industria 39",
+     "EN": "Van den Tweel — Kaya Industria 39",
+     "PAP": "Van den Tweel — Kaya Industria 39"
+    }
+   },
+   {
+    "code": "CO02",
+    "label": {
+     "ES": "Warehouse Bonaire — Kaya Industria 24",
+     "NL": "Warehouse Bonaire — Kaya Industria 24",
+     "EN": "Warehouse Bonaire — Kaya Industria 24",
+     "PAP": "Warehouse Bonaire — Kaya Industria 24"
+    }
+   },
+   {
+    "code": "CO03",
+    "label": {
+     "ES": "Otro supermercado (escriba cuál en la casilla siguiente)",
+     "NL": "Andere supermarkt (schrijf hieronder welke)",
+     "EN": "Another supermarket (please write which one in the next box)",
+     "PAP": "Otro supermerkado (skirbi kua den e kaha ku ta sigui)"
+    }
+   },
+   {
+    "code": "CO04",
+    "label": {
+     "ES": "Comercios del centro de Kralendijk",
+     "NL": "Winkels in het centrum van Kralendijk",
+     "EN": "Shops in Kralendijk town centre",
+     "PAP": "Komersionan di sentro di Kralendijk"
+    }
+   },
+   {
+    "code": "CO05",
+    "label": {
+     "ES": "Comercios de Rincon",
+     "NL": "Winkels in Rincon",
+     "EN": "Shops in Rincon",
+     "PAP": "Komersionan di Rincon"
+    }
+   },
+   {
+    "code": "CO99",
+    "label": {
+     "ES": "Otro comercio no incluido arriba (escriba cuál en la casilla siguiente)",
+     "NL": "Andere winkel, hierboven niet genoemd (schrijf hieronder welke)",
+     "EN": "Another shop not listed above (please write which one in the next box)",
+     "PAP": "Otro komersio ku no ta menshoná ariba (skirbi kua den e kaha ku ta sigui)"
+    }
+   }
+  ],
+  "C5": [
+   {
+    "code": "HT01",
+    "label": {
+     "ES": "Van der Valk Plaza Beach & Dive Resort (276 habitaciones)",
+     "NL": "Van der Valk Plaza Beach & Dive Resort (276 kamers)",
+     "EN": "Van der Valk Plaza Beach & Dive Resort (276 rooms)",
+     "PAP": "Van der Valk Plaza Beach & Dive Resort (276 kamber)"
+    }
+   },
+   {
+    "code": "HT02",
+    "label": {
+     "ES": "Delfins Beach Resort — Tapestry by Hilton (148 hab.)",
+     "NL": "Delfins Beach Resort — Tapestry by Hilton (148 kamers)",
+     "EN": "Delfins Beach Resort — Tapestry by Hilton (148 rooms)",
+     "PAP": "Delfins Beach Resort — Tapestry by Hilton (148 kamber)"
+    }
+   },
+   {
+    "code": "HT03",
+    "label": {
+     "ES": "Divi Flamingo Beach Resort & Casino (141 hab.)",
+     "NL": "Divi Flamingo Beach Resort & Casino (141 kamers)",
+     "EN": "Divi Flamingo Beach Resort & Casino (141 rooms)",
+     "PAP": "Divi Flamingo Beach Resort & Casino (141 kamber)"
+    }
+   },
+   {
+    "code": "HT04",
+    "label": {
+     "ES": "Harbour Village Beach Club",
+     "NL": "Harbour Village Beach Club",
+     "EN": "Harbour Village Beach Club",
+     "PAP": "Harbour Village Beach Club"
+    }
+   },
+   {
+    "code": "HT05",
+    "label": {
+     "ES": "Buddy Dive Resort",
+     "NL": "Buddy Dive Resort",
+     "EN": "Buddy Dive Resort",
+     "PAP": "Buddy Dive Resort"
+    }
+   },
+   {
+    "code": "HT99",
+    "label": {
+     "ES": "Otro hotel, resort o apartamento turístico — escriba cuál",
+     "NL": "Ander hotel, resort of toeristenappartement — schrijf welke",
+     "EN": "Another hotel, resort or tourist apartment — please write which one",
+     "PAP": "Otro hotèl, resort òf apartamento turístiko — skirbi kua"
+    }
+   }
+  ],
+  "C6": [
+   {
+    "code": "G01",
+    "label": {
+     "ES": "Openbaar Lichaam Bonaire — oficinas principales",
+     "NL": "Openbaar Lichaam Bonaire — hoofdkantoren",
+     "EN": "Openbaar Lichaam Bonaire — main offices",
+     "PAP": "Openbaar Lichaam Bonaire — ofisinanan prinsipal"
+    }
+   },
+   {
+    "code": "G02",
+    "label": {
+     "ES": "Belastingdienst / Caribisch Nederland (RCN)",
+     "NL": "Belastingdienst / Caribisch Nederland (RCN)",
+     "EN": "Belastingdienst / Caribisch Nederland (RCN)",
+     "PAP": "Belastingdienst / Caribisch Nederland (RCN)"
+    }
+   },
+   {
+    "code": "G99",
+    "label": {
+     "ES": "Otra oficina pública",
+     "NL": "Ander overheidskantoor",
+     "EN": "Another public office",
+     "PAP": "Otro ofisina públiko"
+    }
+   }
+  ],
+  "C99": [
+   {
+    "code": "L01",
+    "label": {
+     "ES": "Centro de Kralendijk / Playa (zona comercial)",
+     "NL": "Centrum van Kralendijk / Playa (winkelgebied)",
+     "EN": "Kralendijk town centre / Playa (commercial area)",
+     "PAP": "Sentro di Kralendijk / Playa (zona komersial)"
+    }
+   },
+   {
+    "code": "L02",
+    "label": {
+     "ES": "Kaya Industria (zona comercial e industrial)",
+     "NL": "Kaya Industria (handels- en industriegebied)",
+     "EN": "Kaya Industria (commercial and industrial area)",
+     "PAP": "Kaya Industria (zona komersial i industrial)"
+    }
+   },
+   {
+    "code": "L03",
+    "label": {
+     "ES": "Aeropuerto Flamingo",
+     "NL": "Flamingo Airport",
+     "EN": "Flamingo Airport",
+     "PAP": "Flamingo Airport"
+    }
+   },
+   {
+    "code": "L04",
+    "label": {
+     "ES": "Puerto / terminal de cruceros",
+     "NL": "Haven / cruiseterminal",
+     "EN": "Port / cruise terminal",
+     "PAP": "Haf / terminal di cruise"
+    }
+   },
+   {
+    "code": "L05",
+    "label": {
+     "ES": "Cargill — salinas (sur de la isla)",
+     "NL": "Cargill — zoutpannen (zuiden van het eiland)",
+     "EN": "Cargill — salt pans (south of the island)",
+     "PAP": "Cargill — salinja (sùit di e isla)"
+    }
+   },
+   {
+    "code": "L06",
+    "label": {
+     "ES": "Hospital Fundashon Mariadal",
+     "NL": "Hospital Fundashon Mariadal",
+     "EN": "Hospital Fundashon Mariadal",
+     "PAP": "Hospital Fundashon Mariadal"
+    }
+   },
+   {
+    "code": "L07",
+    "label": {
+     "ES": "Zona hotelera norte (Hato / Playa Pariba)",
+     "NL": "Hotelgebied noord (Hato / Playa Pariba)",
+     "EN": "Northern hotel area (Hato / Playa Pariba)",
+     "PAP": "Zona hotelero nòrt (Hato / Playa Pariba)"
+    }
+   },
+   {
+    "code": "L08",
+    "label": {
+     "ES": "Zona hotelera sur (Belnem)",
+     "NL": "Hotelgebied zuid (Belnem)",
+     "EN": "Southern hotel area (Belnem)",
+     "PAP": "Zona hotelero sùit (Belnem)"
+    }
+   },
+   {
+    "code": "L09",
+    "label": {
+     "ES": "Centro de Rincon",
+     "NL": "Centrum van Rincon",
+     "EN": "Rincon town centre",
+     "PAP": "Sentro di Rincon"
+    }
+   },
+   {
+    "code": "L99",
+    "label": {
+     "ES": "Otro lugar, escriba cuál en la casilla siguiente",
+     "NL": "Een andere plek, schrijf hieronder welke",
+     "EN": "Another place, please write which one in the next box",
+     "PAP": "Un otro lugá, skirbi kua den e kaha ku ta sigui"
+    }
+   }
+  ]
+ },
+ "closing": {
+  "f1": [
+   {
+    "ES": "Sus respuestas ya han sido guardadas de forma anónima. Muchas gracias.",
+    "NL": "Uw antwoorden zijn al anoniem opgeslagen. Hartelijk dank.",
+    "EN": "Your answers have already been saved anonymously. Thank you very much.",
+    "PAP": "Bo kontestanan a wòrdu wardá anónimamente kaba. Masha danki."
+   },
+   {
+    "ES": "Si desea mantenerse informado sobre el desarrollo del transporte público en Bonaire, o participar en las decisiones sobre las paradas de su barrio, puede dejarnos sus datos de contacto a continuación. Es completamente voluntario y estos datos se guardan por separado, sin ninguna conexión con las respuestas que acaba de dar.",
+    "NL": "Wilt u op de hoogte blijven van de ontwikkeling van het openbaar vervoer op Bonaire, of meebeslissen over de haltes in uw wijk, dan kunt u hieronder uw contactgegevens achterlaten. Dat is volledig vrijwillig en deze gegevens worden apart bewaard, zonder enige verbinding met de antwoorden die u zojuist hebt gegeven.",
+    "EN": "If you would like to stay informed about the development of public transport in Bonaire, or to take part in decisions about the stops in your neighbourhood, you may leave your contact details below. This is entirely voluntary and these details are stored separately, with no connection whatsoever to the answers you have just given.",
+    "PAP": "Si bo ke keda informá tokante e desaroyo di transporte públiko na Boneiru, òf partisipá den e desishonnan tokante e paradanan di bo bario, bo por laga bo datonan di kontakto akinan bou. Ta kompletamente voluntario i e datonan aki ta wòrdu wardá aparte, sin ningun konekshon ku e kontestanan ku bo kaba di duna."
+   }
+  ],
+  "f6": {
+   "ES": "Gracias por completar esta encuesta. Su opinión ayuda a construir un sistema de transporte público confiable, justo y sostenible para Bonaire.",
+   "NL": "Dank u wel voor het invullen van deze enquête. Uw mening helpt om een betrouwbaar, rechtvaardig en duurzaam openbaar vervoerssysteem voor Bonaire op te bouwen.",
+   "EN": "Thank you for completing this survey. Your views help build a reliable, fair and sustainable public transport system for Bonaire.",
+   "PAP": "Danki pa kompletá e enkuesta aki. Bo opinion ta yuda konstruí un sistema di transporte públiko konfiabel, hustu i sostenibel pa Boneiru."
+  }
+ },
+ "introKeuze": [
+  {
+   "ES": "En cada situación verá dos opciones de autobús con características distintas. Elija la que preferiría, o indique que seguiría viajando como lo hace hoy.",
+   "NL": "In elke situatie ziet u twee busopties met verschillende kenmerken. Kies de optie waaraan u de voorkeur zou geven, of geef aan dat u zou blijven reizen zoals u dat nu doet.",
+   "EN": "In each situation you will see two bus options with different characteristics. Choose the one you would prefer, or indicate that you would carry on travelling as you do today.",
+   "PAP": "Den kada situashon lo bo mira dos opshon di bùs ku karakterístika diferente. Skohe esun ku lo bo prefirí, òf indiká ku lo bo sigui biaha manera bo ta hasi awendia."
+  },
+  {
+   "ES": "No hay respuestas correctas. Piense en lo que realmente haría, teniendo en cuenta su presupuesto.",
+   "NL": "Er zijn geen goede antwoorden. Denk aan wat u werkelijk zou doen, rekening houdend met uw budget.",
+   "EN": "There are no right answers. Think about what you would really do, bearing your budget in mind.",
+   "PAP": "No tin kontesta korekto. Pensa riba loke di bèrdat lo bo hasi, tumando na kuenta bo presupuesto."
+  }
+ ]
+};
+const UI = {
+ "langName": {
+  "ES": "Español",
+  "NL": "Nederlands",
+  "EN": "English",
+  "PAP": "Papiamentu"
+ },
+ "start": {
+  "ES": "Comenzar",
+  "NL": "Beginnen",
+  "EN": "Start",
+  "PAP": "Kuminsá"
+ },
+ "next": {
+  "ES": "Siguiente",
+  "NL": "Volgende",
+  "EN": "Next",
+  "PAP": "Siguiente"
+ },
+ "back": {
+  "ES": "Atrás",
+  "NL": "Vorige",
+  "EN": "Back",
+  "PAP": "Bèk"
+ },
+ "submit": {
+  "ES": "Enviar respuestas",
+  "NL": "Antwoorden versturen",
+  "EN": "Submit answers",
+  "PAP": "Manda kontesta"
+ },
+ "step": {
+  "ES": "Parte {a} de {b}",
+  "NL": "Deel {a} van {b}",
+  "EN": "Part {a} of {b}",
+  "PAP": "Parti {a} di {b}"
+ },
+ "required": {
+  "ES": "Por favor responda esta pregunta.",
+  "NL": "Beantwoord deze vraag alstublieft.",
+  "EN": "Please answer this question.",
+  "PAP": "Pa fabor kontestá e pregunta aki."
+ },
+ "range": {
+  "ES": "Escriba un número entre {a} y {b}.",
+  "NL": "Vul een getal in tussen {a} en {b}.",
+  "EN": "Enter a number between {a} and {b}.",
+  "PAP": "Skirbi un number entre {a} i {b}."
+ },
+ "maxSel": {
+  "ES": "Elija como máximo {n} opciones.",
+  "NL": "Kies maximaal {n} opties.",
+  "EN": "Choose at most {n} options.",
+  "PAP": "Skohe maksimo {n} opshon."
+ },
+ "errA3": {
+  "ES": "El número de menores no puede superar el total de personas del hogar. Revise su respuesta.",
+  "NL": "Het aantal minderjarigen kan niet hoger zijn dan het totale aantal personen in het huishouden. Controleer uw antwoord.",
+  "EN": "The number of minors cannot exceed the total number of people in the household. Please review your answer.",
+  "PAP": "E kantidat di menor no por pasa e total di persona den e kas. Kontrolá bo kontesta."
+ },
+ "errB4": {
+  "ES": "Usted indicó que este desplazamiento es fuera de su barrio. ¿El origen y el destino son realmente el mismo barrio?",
+  "NL": "U hebt aangegeven dat deze verplaatsing buiten uw wijk plaatsvindt. Zijn herkomst en bestemming werkelijk dezelfde wijk?",
+  "EN": "You indicated that this trip takes you outside your neighbourhood. Are the origin and destination really the same neighbourhood?",
+  "PAP": "Bo a indiká ku e biahe aki ta pafó di bo bario. E orígen i e destino di bèrdat ta e mesun bario?"
+ },
+ "outConsent": {
+  "ES": "Gracias por su interés.",
+  "NL": "Dank voor uw belangstelling.",
+  "EN": "Thank you for your interest.",
+  "PAP": "Danki pa bo interes."
+ },
+ "outResid": {
+  "ES": "Esta encuesta está dirigida a residentes de Bonaire. Gracias por su interés.",
+  "NL": "Deze enquête is bedoeld voor inwoners van Bonaire. Dank voor uw belangstelling.",
+  "EN": "This survey is intended for residents of Bonaire. Thank you for your interest.",
+  "PAP": "E enkuesta aki ta dirigí na residentenan di Boneiru. Danki pa bo interes."
+ },
+ "outEdad": {
+  "ES": "Esta encuesta está dirigida a personas de 16 años o más. Gracias por su interés.",
+  "NL": "Deze enquête is bedoeld voor personen van 16 jaar of ouder. Dank voor uw belangstelling.",
+  "EN": "This survey is intended for people aged 16 or over. Thank you for your interest.",
+  "PAP": "E enkuesta aki ta dirigí na hende di 16 aña òf mas. Danki pa bo interes."
+ },
+ "sending": {
+  "ES": "Enviando…",
+  "NL": "Bezig met versturen…",
+  "EN": "Sending…",
+  "PAP": "Ta manda…"
+ },
+ "sendErr": {
+  "ES": "No se pudieron enviar sus respuestas. Compruebe su conexión y vuelva a intentarlo.",
+  "NL": "Uw antwoorden konden niet worden verstuurd. Controleer uw verbinding en probeer het opnieuw.",
+  "EN": "Your answers could not be sent. Check your connection and try again.",
+  "PAP": "No por a manda bo kontestanan. Kontrolá bo konekshon i purba atrobe."
+ },
+ "retry": {
+  "ES": "Reintentar",
+  "NL": "Opnieuw proberen",
+  "EN": "Try again",
+  "PAP": "Purba atrobe"
+ },
+ "nameL": {
+  "ES": "Nombre",
+  "NL": "Naam",
+  "EN": "Name",
+  "PAP": "Nòmber"
+ },
+ "emailL": {
+  "ES": "Correo electrónico",
+  "NL": "E-mailadres",
+  "EN": "Email address",
+  "PAP": "Adrès di e-mail"
+ },
+ "telL": {
+  "ES": "Teléfono",
+  "NL": "Telefoonnummer",
+  "EN": "Telephone number",
+  "PAP": "Number di telefòn"
+ },
+ "optional": {
+  "ES": "opcional",
+  "NL": "optioneel",
+  "EN": "optional",
+  "PAP": "opshonal"
+ },
+ "minutes": {
+  "ES": "minutos",
+  "NL": "minuten",
+  "EN": "minutes",
+  "PAP": "minüt"
+ },
+ "chars": {
+  "ES": "caracteres",
+  "NL": "tekens",
+  "EN": "characters",
+  "PAP": "karakter"
+ },
+ "cTitle": {
+  "ES": "Manténgase informado",
+  "NL": "Blijf op de hoogte",
+  "EN": "Stay informed",
+  "PAP": "Keda informá"
+ },
+ "cIntro": {
+  "ES": "Usted indicó que desea que le informemos sobre el transporte público en Bonaire. Déjenos aquí sus datos.",
+  "NL": "U hebt aangegeven op de hoogte te willen blijven van het openbaar vervoer op Bonaire. Laat hier uw gegevens achter.",
+  "EN": "You indicated that you would like to be kept informed about public transport in Bonaire. Leave your details here.",
+  "PAP": "Bo a indiká ku bo ke keda informá tokante transporte públiko na Boneiru. Laga bo datonan akinan."
+ },
+ "cSep": {
+  "ES": "Estos datos se guardan por separado y no quedan unidos a las respuestas que acaba de dar.",
+  "NL": "Deze gegevens worden apart bewaard en worden niet gekoppeld aan de antwoorden die u zojuist hebt gegeven.",
+  "EN": "These details are stored separately and are not linked to the answers you have just given.",
+  "PAP": "E datonan aki ta wòrdu wardá aparte i no ta keda uní na e kontestanan ku bo kaba di duna."
+ },
+ "cNeed": {
+  "ES": "Rellene al menos el correo o el teléfono.",
+  "NL": "Vul ten minste het e-mailadres of het telefoonnummer in.",
+  "EN": "Fill in at least the email address or the telephone number.",
+  "PAP": "Yena por lo ménos e e-mail òf e number di telefòn."
+ },
+ "cSend": {
+  "ES": "Enviar mis datos",
+  "NL": "Mijn gegevens versturen",
+  "EN": "Send my details",
+  "PAP": "Manda mi datonan"
+ },
+ "cDone": {
+  "ES": "Gracias. Le mantendremos informado.",
+  "NL": "Dank u wel. We houden u op de hoogte.",
+  "EN": "Thank you. We will keep you informed.",
+  "PAP": "Danki. Nos lo tene bo informá."
+ }
+};
+</script>
+<script>
+/* ============================================================
+   Encuesta de Movilidad y Transporte Público — Bonaire 2026
+   MOB-BON-2026 v1.3 · formulario web de 4 idiomas
+   ============================================================ */
+
+const LANGS = SURVEY.langs;
+let lang = localStorage.getItem('mobbon_lang') || 'ES';
+let step = 0;                       // 0 = portada, 1..n = bloques, n+1 = final
+const A = JSON.parse(localStorage.getItem('mobbon_ans') || '{}');
+let ended = null;
+
+const $ = s => document.querySelector(s);
+const t = (k, vars) => {
+  let s = UI[k][lang] || UI[k].ES;
+  if (vars) for (const [a, b] of Object.entries(vars)) s = s.replace('{' + a + '}', b);
+  return s;
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const save = () => localStorage.setItem('mobbon_ans', JSON.stringify(A));
+
+/* ---------- derivación de B5a a partir de B2_Motivo ---------- */
+const B2_TO_C = {Estudio:'C2', Salud:'C3', Compras:'C4', Gobierno:'C6'};
+const B2_NO_CASCADE = ['Familia', 'Iglesia', 'Recreacion', 'Acompanar'];
+function b5aCode() {
+  const m = A.B2_Motivo;
+  if (!m) return null;
+  if (B2_TO_C[m]) return B2_TO_C[m];
+  if (B2_NO_CASCADE.includes(m)) return null;
+  return A.B5a_TipoDestino || null;      // Trabajo u Otro: se pregunta
+}
+
+/* ---------- ¿se muestra esta pregunta? ---------- */
+function visible(q) {
+  if (q.id === 'B5a_TipoDestino')
+    return A.B1_ViajaFuera === 'Si' && ['Trabajo', 'Otro'].includes(A.B2_Motivo);
+  if (q.id === 'B5b_DestinoEspecifico')
+    return A.B1_ViajaFuera === 'Si' && !!b5aCode();
+  if (q.id === 'A10_IdiomaMas')
+    return (A.A9_Idiomas || []).length > 1;
+  const c = q.cond;
+  if (!c) return true;
+  const v = A[c.q];
+  if (v === undefined || v === '') return false;
+  if (c.op === '=')  return v === c.v;
+  if (c.op === 'in') return c.v.includes(v);
+  if (c.op === '>')  return Number(v) > c.v;
+  return true;
+}
+
+/* ---------- opciones efectivas ---------- */
+function optionsOf(q) {
+  if (q.id === 'B5b_DestinoEspecifico') return SURVEY.b5b[b5aCode()] || [];
+  if (q.id === 'A10_IdiomaMas') {
+    const picked = A.A9_Idiomas || [];
+    const a9 = allQuestions().find(x => x.id === 'A9_Idiomas');
+    return a9.options.filter(o => picked.includes(o.code));
+  }
+  return q.options || [];
+}
+const allQuestions = () => SURVEY.blocks.flatMap(b => b.questions);
+
+/* ---------- render ---------- */
+function render() {
+  document.documentElement.lang = lang.toLowerCase();
+  $('#langbar').innerHTML = LANGS.map(l =>
+    `<button class="lang${l === lang ? ' on' : ''}" data-l="${l}">${esc(UI.langName[l])}</button>`).join('');
+
+  if (ended) return renderEnd();
+  if (step === 0) return renderCover();
+  if (step > SURVEY.blocks.length) return renderThanks();
+  renderBlock(SURVEY.blocks[step - 1]);
+}
+
+function renderCover() {
+  $('#bar').style.width = '0%';
+  $('#main').innerHTML =
+    `<h1>${esc(SURVEY.intro[0][lang])}</h1>` +
+    SURVEY.intro.slice(1).map(p =>
+      `<p class="intro">${esc(p[lang]).replace(/\n/g, '<br>')}</p>`).join('') +
+    `<div class="nav"><button id="go" class="primary">${esc(t('start'))}</button></div>`;
+  $('#go').onclick = () => { step = 1; window.scrollTo(0, 0); render(); };
+}
+
+function renderBlock(b) {
+  const n = SURVEY.blocks.length;
+  $('#bar').style.width = (step / (n + 1) * 100) + '%';
+  const qs = b.questions.filter(visible);
+  let h = `<p class="step">${esc(t('step', {a: step, b: n}))}</p>
+           <h2>${esc(b.title[lang])}</h2>`;
+  qs.forEach((q, i) => { h += field(q, i + 1); });
+  h += `<div class="nav">
+          ${step > 1 ? `<button id="prev">${esc(t('back'))}</button>` : '<span></span>'}
+          <button id="nx" class="primary">${step === n ? esc(t('submit')) : esc(t('next'))}</button>
+        </div>`;
+  $('#main').innerHTML = h;
+  wire(qs);
+}
+
+function field(q, i) {
+  const id = q.id;
+  const lbl = `<div class="q" id="w_${id}">
+     <p class="qt"><span class="num">${i}</span>${esc(q.text[lang])}</p>
+     ${q.hint ? `<p class="hint">${esc(q.hint[lang])}</p>` : ''}
+     <p class="err" id="e_${id}"></p>`;
+  let body = '';
+  const opts = optionsOf(q);
+
+  if (q.type === 'radio') {
+    const cur = A[id] !== undefined ? A[id] : (q.default ? A[q.default] : undefined);
+    body = `<div class="opts">` + opts.map(o =>
+      `<label class="opt${cur === o.code ? ' sel' : ''}">
+         <input type="radio" name="${id}" value="${esc(o.code)}"${cur === o.code ? ' checked' : ''}>
+         <span>${esc(o.label[lang])}</span></label>`).join('') + `</div>`;
+  } else if (q.type === 'cascade') {
+    body = `<div class="opts">` + opts.map(o =>
+      `<label class="opt${A[id] === o.code ? ' sel' : ''}">
+         <input type="radio" name="${id}" value="${esc(o.code)}"${A[id] === o.code ? ' checked' : ''}>
+         <span>${esc(o.label[lang])}</span></label>`).join('') + `</div>`;
+  } else if (q.type === 'check') {
+    const cur = A[id] || [];
+    body = `<div class="opts">` + opts.map(o =>
+      `<label class="opt${cur.includes(o.code) ? ' sel' : ''}">
+         <input type="checkbox" name="${id}" value="${esc(o.code)}"${cur.includes(o.code) ? ' checked' : ''}>
+         <span>${esc(o.label[lang])}</span></label>`).join('') + `</div>`;
+  } else if (q.type === 'number') {
+    const unit = id === 'B10_Duracion' ? ` <span class="unit">${esc(t('minutes'))}</span>` : '';
+    body = `<p><input class="num-in" type="number" inputmode="numeric" name="${id}"
+              min="${q.min}" max="${q.max}" value="${A[id] !== undefined ? esc(A[id]) : ''}">${unit}
+            <span class="unit">(${q.min}–${q.max})</span></p>`;
+  } else if (q.type === 'text') {
+    body = `<p><input class="txt" type="text" name="${id}" maxlength="${q.maxlen}"
+              value="${A[id] ? esc(A[id]) : ''}"></p>`;
+  } else if (q.type === 'textarea') {
+    body = `<p><textarea class="txt" name="${id}" rows="4" maxlength="${q.maxlen}">${A[id] ? esc(A[id]) : ''}</textarea></p>`;
+  } else if (q.type === 'matrix') {
+    body = q.rows.map((r, ri) => {
+      const key = id + '_' + ri;
+      return `<div class="mrow"><p class="mlab">${esc(r[lang])}</p><div class="opts">` +
+        opts.map(o => `<label class="opt${A[key] === o.code ? ' sel' : ''}">
+          <input type="radio" name="${key}" value="${esc(o.code)}"${A[key] === o.code ? ' checked' : ''}>
+          <span>${esc(o.label[lang])}</span></label>`).join('') + `</div></div>`;
+    }).join('');
+  }
+  return lbl + body + `</div>`;
+}
+
+/* ---------- eventos ---------- */
+function wire(qs) {
+  $('#main').querySelectorAll('input,textarea').forEach(el => {
+    el.addEventListener('change', () => {
+      const nm = el.name;
+      if (el.type === 'checkbox') {
+        const q = allQuestions().find(x => x.id === nm);
+        let cur = A[nm] || [];
+        if (el.checked) {
+          if (q.exclusive && el.value === q.exclusive) cur = [el.value];
+          else { cur = cur.filter(v => v !== q.exclusive); cur.push(el.value); }
+        } else cur = cur.filter(v => v !== el.value);
+        if (q.maxSelect && cur.length > q.maxSelect) {
+          el.checked = false;
+          return flash(nm, t('maxSel', {n: q.maxSelect}));
+        }
+        A[nm] = cur;
+      } else A[nm] = el.value;
+      save();
+      if (['B2_Motivo','B5a_TipoDestino','A9_Idiomas','A4_Autos','B1_ViajaFuera',
+           'B13_ViajeNoRealizado','A3_MenoresEscolarizados','F2_ConsentContacto'].includes(nm)) {
+        const y = window.scrollY; render(); window.scrollTo(0, y);
+      } else {
+        el.closest('.opts')?.querySelectorAll('.opt').forEach(o =>
+          o.classList.toggle('sel', o.querySelector('input').checked));
+      }
+    });
+  });
+  $('#prev') && ($('#prev').onclick = () => { step--; window.scrollTo(0, 0); render(); });
+  $('#nx').onclick = () => {
+    if (!validate(qs)) return;
+    if (A.Consent === 'No')       return end(t('outConsent'));
+    if (A.Residencia === 'No')    return end(t('outResid'));
+    if (A.Edad && Number(A.Edad) < 16) return end(t('outEdad'));
+    if (step === SURVEY.blocks.length) return submit();
+    step++; window.scrollTo(0, 0); render();
+
+  };
+}
+
+function flash(id, msg) {
+  const e = $('#e_' + id) || $('#e_' + id.split('_').slice(0, -1).join('_'));
+  if (!e) return alert(msg);
+  e.textContent = msg; e.style.display = 'block';
+  e.closest('.q').scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function validate(qs) {
+  $('#main').querySelectorAll('.err').forEach(e => { e.textContent = ''; e.style.display = 'none'; });
+  for (const q of qs) {
+    const v = A[q.id];
+    if (q.type === 'matrix') {
+      for (let ri = 0; ri < q.rows.length; ri++)
+        if (!A[q.id + '_' + ri]) { flash(q.id, t('required')); return false; }
+      continue;
+    }
+    if (q.type === 'number' && v !== undefined && v !== '') {
+      const n = Number(v);
+      if (!Number.isInteger(n) || n < q.min || n > q.max) {
+        flash(q.id, t('range', {a: q.min, b: q.max})); return false;
+      }
+    }
+    if (q.required && (v === undefined || v === '' || (Array.isArray(v) && !v.length))) {
+      flash(q.id, t('required')); return false;
+    }
+    if (q.lte && A[q.lte] !== undefined && Number(v) > Number(A[q.lte])) {
+      flash(q.id, t('errA3')); return false;
+    }
+    if (q.neq && v && v === A[q.neq]) { flash(q.id, t('errB4')); return false; }
+  }
+  return true;
+}
+
+/* ---------- envío: cola persistente con reintento ---------- */
+const QK = 'mobbon_queue';
+const queue = () => { try { return JSON.parse(localStorage.getItem(QK) || '[]'); } catch (e) { return []; } };
+const setQueue = q => { try { localStorage.setItem(QK, JSON.stringify(q)); } catch (e) {} };
+
+/** Intenta vaciar la cola. Devuelve cuántos quedan pendientes. */
+async function flush() {
+  if (!ENDPOINT) return queue().length;
+  let q = queue();
+  while (q.length) {
+    try {
+      await fetch(ENDPOINT, {
+        method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify(q[0])
+      });
+    } catch (e) {
+      break;                       // sin conexión: se queda en la cola para el próximo intento
+    }
+    q.shift(); setQueue(q); q = queue();
+  }
+  return q.length;
+}
+
+async function submit() {
+  const btn = $('#nx'); btn.disabled = true; btn.textContent = t('sending');
+  const payload = {
+    instrumento: 'MOB-BON-2026 v1.3',
+    idioma: lang,
+    enviado: new Date().toISOString(),
+    canal: new URLSearchParams(location.search).get('canal') || 'CH99',
+    respuestas: A
+  };
+  const q = queue(); q.push(payload); setQueue(q);
+
+  if (!ENDPOINT) {                 // sin destino configurado: descarga local (solo para pruebas)
+    const b = new Blob([JSON.stringify(payload, null, 1)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'MOBBON26_' + Date.now() + '.json';
+    a.click();
+    setQueue([]);
+    return done();
+  }
+  const pend = await flush();
+  if (pend === 0) return done();
+  btn.disabled = false; btn.textContent = t('submit');
+  flash(SURVEY.blocks[step - 1].questions[0].id, t('sendErr'));
+}
+
+function done() {
+  try { localStorage.setItem('mobbon_contacto', A.F2_ConsentContacto === 'Si' ? '1' : '0'); } catch (e) {}
+  localStorage.removeItem('mobbon_ans'); localStorage.removeItem('mobbon_last'); step = SURVEY.blocks.length + 1; window.scrollTo(0, 0); render(); }
+
+function renderThanks() {
+  $('#bar').style.width = '100%';
+  let h = `<h2>${esc(SURVEY.closing.f1[0][lang])}</h2>
+           <p class="intro">${esc(SURVEY.closing.f6[lang])}</p>`;
+  if (localStorage.getItem('mobbon_contacto') === '1') {
+    // Los datos de contacto se piden AQUI MISMO, sin cambiar de pantalla,
+    // pero se envian en una peticion aparte a otro destino (ver enviarContacto).
+    h += `<div class="q" id="cbox" style="margin-top:24px">
+       <p class="qt">${esc(t('cTitle'))}</p>
+       <p class="hint">${esc(t('cIntro'))}</p>
+       <p class="err" id="cerr"></p>
+       <p><label class="flab">${esc(t('nameL'))}</label>
+          <input class="txt" id="c_n" type="text" maxlength="40" autocomplete="name"></p>
+       <p><label class="flab">${esc(t('emailL'))}</label>
+          <input class="txt" id="c_e" type="email" maxlength="60" autocomplete="email"></p>
+       <p><label class="flab">${esc(t('telL'))}</label>
+          <input class="txt" id="c_p" type="tel" maxlength="15" autocomplete="tel"></p>
+       <p style="margin-top:16px">
+          <button id="csend" class="primary nav-btn">${esc(t('cSend'))}</button></p>
+       <p class="sep-note">${esc(t('cSep'))}</p>
+     </div>`;
+  }
+  $('#main').innerHTML = h;
+  const b = $('#csend');
+  if (b) b.onclick = enviarContacto;
+}
+
+/** Envio INDEPENDIENTE: otra peticion, otro destino, sin nada que lo ate a las respuestas. */
+async function enviarContacto() {
+  const n = $('#c_n').value.trim(), e = $('#c_e').value.trim(), p = $('#c_p').value.trim();
+  const err = $('#cerr');
+  err.style.display = 'none';
+  if (!e && !p) { err.textContent = t('cNeed'); err.style.display = 'block'; return; }
+  const b = $('#csend'); b.disabled = true; b.textContent = t('sending');
+  const payload = {tipo: 'contacto', idioma: lang, nombre: n, email: e, telefono: p};
+  try {
+    if (ENDPOINT) {
+      await fetch(ENDPOINT, {method: 'POST', mode: 'no-cors', keepalive: true,
+        headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
+    }
+    localStorage.removeItem('mobbon_contacto');
+    $('#cbox').innerHTML = `<p class="qt">${esc(t('cDone'))}</p>`;
+  } catch (x) {
+    b.disabled = false; b.textContent = t('cSend');
+    err.textContent = t('sendErr'); err.style.display = 'block';
+  }
+}
+
+function end(msg) { ended = msg; localStorage.removeItem('mobbon_ans'); window.scrollTo(0, 0); render(); }
+function renderEnd() {
+  $('#bar').style.width = '100%';
+  $('#main').innerHTML = `<h2>${esc(ended)}</h2>`;
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('.lang');
+  if (!b) return;
+  lang = b.dataset.l; localStorage.setItem('mobbon_lang', lang);
+  const y = window.scrollY; render(); window.scrollTo(0, y);
+});
+render();
+
+/* ---------- salvaguardas para quien publica el formulario ---------- */
+(function admin() {
+  if (!ENDPOINT) {
+    const d = document.createElement('div');
+    d.id = 'warn';
+    d.innerHTML = '<b>CONFIGURACION INCOMPLETA.</b> La linea ENDPOINT de este archivo esta vacia: ' +
+      'las respuestas NO se envian a ninguna parte, solo se descargan en el dispositivo de quien ' +
+      'responde. Pegue la URL de su Google Apps Script antes de publicar este formulario.';
+    document.body.prepend(d);
+  }
+  flush().then(n => {
+    if (n > 0 && ENDPOINT) {
+      const d = document.createElement('div');
+      d.id = 'pend';
+      d.textContent = n + ' respuesta(s) pendiente(s) de enviar. Se reintentara automaticamente.';
+      document.body.prepend(d);
+    }
+  });
+  if (location.hash === '#estado') {
+    alert('Destino configurado: ' + (ENDPOINT ? 'SI' : 'NO') +
+          '\nRespuestas en cola: ' + queue().length);
+  }
+})();
+
+</script>
+</body>
+</html>
